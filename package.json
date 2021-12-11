@@ -10,6 +10,7 @@
   "scripts": {
     "prepare": "cd ./util && make web",
     "build": "echo 'build module from wasm...'",
+    "postbuild": "cp ./util/dilithium.*  ./docs",
     "build:spec": "./spec/build-html.sh",
     "shove:spec": "git add ./spec; git commit -m 'Spec editorial'; git push origin master",
     "pretest": "node ./node-js/sanity-test.js",

@@ -7,7 +7,12 @@ function App() {
   useEffect(() => {
     (async () => {
       await di.init();
-      console.log(di);
+      const privateKeyJwk = await di.generate();
+      console.log(privateKeyJwk);
+      const message = "hello";
+      const signature = await di.sign(message, privateKeyJwk);
+      const verified = await di.verify(signature, message, privateKeyJwk);
+      console.log({ privateKeyJwk, message, verified });
     })();
   }, []);
 
