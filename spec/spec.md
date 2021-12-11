@@ -64,8 +64,17 @@ TODO
 
 The following terminology is used throughout this document:
 
+PK
+: The public key for the signature scheme.
+
 SK
 : The secret key for the signature scheme.
+
+signature
+: The digital signature output.
+
+message
+: The input to be signed by the signature scheme.
 
 sha256
 : The SHA-256 hash function defined in [@!RFC6234].
