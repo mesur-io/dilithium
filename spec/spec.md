@@ -109,17 +109,95 @@ KeyValidate checks if the public key is valid.
 
 // TODO
 
-# JOSE Encoding
+# Key Type "PQK"
 
-// TODO
+A new key type (kty) value "PQK" (Post Quantum Key Pair) is defined for
+public key algorithms that use octet strings as private and public
+keys and that support cryptographic sponge fucntions. It has the following parameters:
 
-## JWK
+o The parameter "kty" MUST be "PQK".
 
-// TODO
+o The parameter "pset" MUST be "3.
 
-## JWS
+o The parameter "x" MUST be present and contain the public key
+encoded using the base64url [RFC4648] encoding.
 
-// TODO
+o The parameter "xs" MAY be present and contain the shake256 of the public key
+encoded using the base64url [RFC4648] encoding.
+
+o The parameter "d" MUST be present for private keys and contain the
+private key encoded using the base64url encoding. This parameter
+MUST NOT be present for public keys.
+
+o The parameter "ds" MAY be present for private keys and contain the
+shake256 of the private key encoded using the base64url encoding. This parameter
+MUST NOT be present for public keys.
+
+When calculating JWK Thumbprints [RFC7638], the three public key
+fields are included in the hash input in lexicographic order:
+"kty", and "x".
+
+## publicKeyJwk
+
+```
+{
+    "kty": "PQK",
+    "pset": "3",
+    "xs": "z3uZQVjflnRZDSZn1e8g4oKH4YUU6TnpvkU4WrrGdXw=",
+    "ds": "5DuZ8XoJQirc/5TE23tBcoGoHo+JTj1+9ULLXtCiySU=",
+    "x": "z7...",
+}
+```
+
+## privateKeyJwk
+
+```
+{
+    "kty": "PQK",
+    "pset": "3",
+    "xs": "z3uZQVjflnRZDSZn1e8g4oKH4YUU6TnpvkU4WrrGdXw=",
+    "ds": "5DuZ8XoJQirc/5TE23tBcoGoHo+JTj1+9ULLXtCiySU=",
+    "x": "z7...",
+    "d": "z7u7Gw..."
+}
+```
+
+# Algorithms
+
+## Signatures
+
+For the purpose of using the Dilithium Signature
+Algorithm (DICRY) for signing data using "JSON Web Signature (JWS)"
+[RFC7515], algorithm "DICRY" is defined here, to be applied as the
+value of the "alg" parameter.
+
+The following key subtypes are defined here for use with DICRY:
+
+      "pset"             DICRY Variant
+      3                  DICRY3
+      2                  DICRY2
+
+The key type used with these keys is "PQK" and the algorithm used for
+signing is "DICRY". These subtypes MUST NOT be used for key agreement.
+
+The DICRY variant used is determined by the subtype of the key
+(DICRY3 for "pset 3" and DICRY2 for "pset 2").
+
+### Signing
+
+Signing for these is performed by applying the signing algorithm
+defined in [TODO] to the private key (as private key), public key
+(as public key), and the JWS Signing Input (as message). The
+resulting signature is the JWS Signature. All inputs and outputs are
+octet strings.
+
+### Verifiying
+
+Verification is performed by applying the verification algorithm
+defined in [TODO] to the public key (as public key), the JWS
+Signing Input (as message), and the JWS Signature (as signature).
+All inputs are octet strings. If the algorithm accepts, the
+signature is valid; otherwise, the signature is invalid.
 
 # Security Considerations
 
@@ -138,15 +216,78 @@ It is recommended that the all nonces are from a trusted source of randomness.
 
 # IANA Considerations
 
-This document does not make any requests of IANA.
+The following has NOT YET been added to the "JSON Web Key Types" registry:
 
-TODO:
+o "kty" Parameter Value: "PQK"
+o Key Type Description: Octet string key pairs
+o JOSE Implementation Requirements: Optional
+o Change Controller: IESG
+o Specification Document(s): Section 2 of this document (RFC TBD)
 
-Request for JOSE and COSE...:
+The following has NOT YET been added to the "JSON Web Key Parameters"
+registry:
 
-- alg: FOO128
-- kty: BAR128
-- etc...
+o Parameter Name: "pset"
+o Parameter Description: The parameter set of the crypto system
+o Parameter Information Class: Public
+o Used with "kty" Value(s): "PQK"
+o Change Controller: IESG
+o Specification Document(s): Section 2 of this document (RFC TBD)
+
+o Parameter Name: "xs"
+o Parameter Description: The shake256 of the public key
+o Parameter Information Class: Public
+o Used with "kty" Value(s): "PQK"
+o Change Controller: IESG
+o Specification Document(s): Section 2 of this document (RFC TBD)
+
+o Parameter Name: "ds"
+o Parameter Description: The shake256 of the private key
+o Parameter Information Class: Private
+o Used with "kty" Value(s): "PQK"
+o Change Controller: IESG
+o Specification Document(s): Section 2 of this document (RFC TBD)
+
+o Parameter Name: "d"
+o Parameter Description: The private key
+o Parameter Information Class: Private
+o Used with "kty" Value(s): "OKP"
+o Change Controller: IESG
+o Specification Document(s): Section 2 of RFC 8037
+
+o Parameter Name: "x"
+o Parameter Description: The public key
+o Parameter Information Class: Public
+o Used with "kty" Value(s): "OKP"
+o Change Controller: IESG
+o Specification Document(s): Section 2 of RFC 8037
+
+The following has NOT YET been added to the "JSON Web Signature and
+Encryption Algorithms" registry:
+
+o Algorithm Name: "DICRY3"
+o Algorithm Description: DICRY3 signature algorithms
+o Algorithm Usage Location(s): "alg"
+o JOSE Implementation Requirements: Optional
+o Change Controller: IESG
+
+o Specification Document(s): Section 3.1 of this document (RFC TBD)
+o Algorithm Analysis Documents(s): [RFC TBD]
+
+The following has been added to the "JSON Web Key Lattice"
+registry:
+
+o Lattice Name: "DICRY3"
+o Lattice Description: Dilithium 3 signature algorithm key pairs
+o JOSE Implementation Requirements: Optional
+o Change Controller: IESG
+o Specification Document(s): Section 3.1 of this document (RFC TBD)
+
+o Lattice Name: "DICRY2"
+o Lattice Description: Dilithium 2 signature algorithm key pairs
+o JOSE Implementation Requirements: Optional
+o Change Controller: IESG
+o Specification Document(s): Section 3.1 of this document (RFC TBD)
 
 # Appendix
 
