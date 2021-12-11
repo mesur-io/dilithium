@@ -12,10 +12,12 @@ jobs:
         with:
           node-version: 14.x
 
-      - name: Install
+      - name: Dependencies
         uses: lovasoa/setup-emscripten@master
         with:
           emscripten-version: "1.38.47"
+
+      - name: Install
         run: npm i
 
       - name: Build Spec
