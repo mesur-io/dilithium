@@ -29,10 +29,10 @@ int main(int argc, char *argv[])
         case 'h':
             return usage();
         case 'k':
-            keyPath = optarg;
+            strcpy(keyPath, optarg);
             break;
         case 'm':
-            messagePath = optarg;
+            strcpy(messagePath, optarg);
             break;
         case '?':
             printf("Unknown option: %c\n", optopt);
