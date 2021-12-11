@@ -4,3 +4,4 @@ dilithium.wasm
 dilithium.wasm.map
 dilithium
 dsign
+tmp*
