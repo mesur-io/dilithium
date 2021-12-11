@@ -8,4 +8,9 @@ describe("@mesur/dilithium", () => {
     expect(di._dilithiumVerify).toBeDefined();
     expect(di._dilithiumVerify).toBeDefined();
   });
+
+  it("should generate key", async () => {
+    const jwk = await di._dilithiumGenerate();
+    console.log(jwk);
+  });
 });
