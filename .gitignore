@@ -23,3 +23,6 @@ tmillion5
 build/
 *.gch
 
+docs/spec/*
+!docs/spec/.gitkeep
+node_modules

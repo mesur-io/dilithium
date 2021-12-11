@@ -1,0 +1,21 @@
+{
+  "name": "dilithium",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "build": "./spec/build-html.sh"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mesur-io/dilithium.git"
+  },
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/mesur-io/dilithium/issues"
+  },
+  "homepage": "https://github.com/mesur-io/dilithium#readme"
+}
