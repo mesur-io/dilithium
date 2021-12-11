@@ -21,7 +21,7 @@ AES_HEADERS = $(HEADERS) ../ref/fips202.h ../ref/aes256ctr.h
 WEBASM_COMPILER ?= emcc
 WEBASM_EXPORTS = _dilithiumGenerate, _dilithiumSign, _dilithiumVerify, _dilithiumVersion, _malloc
 WEBASM_FLAGS ?= -O3 -s WASM=1 \
-  ${DILITHIUM_MODE} \
+  ${DILITHIUM_MODE} -s MODULARIZE -s EXPORT_NAME="dilithium" \
   -s EXPORTED_FUNCTIONS="[$(WEBASM_EXPORTS)]"
 
 WEBASM_SOURCES = websign.c $(KECCAK_SOURCES)
@@ -29,7 +29,7 @@ WASM_HEADERS = -I ../ref/config.h -I ../ref/params.h -I ../ref/api.h -I ../ref/s
   -I ../ref/polyvec.h -I ../ref/poly.h -I ../ref/ntt.h \
   -I ../ref/reduce.h -I ../ref/rounding.h -I ../ref/symmetric.h -I ../ref/randombytes.h -I ../ref/fips202.h \
   -I common.h -I base64.h -I keypair.h -I uapi.h 
-WEBASM_OUTPUT = dilithium.html
+WEBASM_OUTPUT = dilithium.js
 
 CLI_HEADERS = cli.h $(KECCAK_HEADERS)
 CLI_SOURCES = cli.c $(KECCAK_SOURCES)
