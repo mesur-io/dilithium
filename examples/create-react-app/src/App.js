@@ -8,7 +8,6 @@ function App() {
     (async () => {
       await di.init();
       const privateKeyJwk = await di.generate();
-      console.log(privateKeyJwk);
       const message = "hello";
       const signature = await di.sign(message, privateKeyJwk);
       const verified = await di.verify(signature, message, privateKeyJwk);

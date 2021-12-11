@@ -15,7 +15,6 @@
   "scripts": {
     "start": "SKIP_PREFLIGHT_CHECK=true react-scripts start",
     "build": "SKIP_PREFLIGHT_CHECK=true react-scripts build",
-    "postbuild": "cp ./public/static/js/dilithium.wasm ./build/static/js/dilithium.wasm",
     "eject": "SKIP_PREFLIGHT_CHECK=true react-scripts eject"
   },
   "eslintConfig": {
