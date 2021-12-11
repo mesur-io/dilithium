@@ -13,6 +13,15 @@ value = "dilithium-jose-00"
 status = "informational"
 
 [[author]]
+initials = "P."
+surname = "Prorock"
+fullname = "Mike Prorock"
+#role = "editor"
+organization = "Mesur"
+[author.address]
+email = "mike@mesur.io"
+
+[[author]]
 initials = "O."
 surname = "Steele"
 fullname = "Orie Steele"
@@ -21,14 +30,6 @@ organization = "Transmute"
 [author.address]
 email = "orie@transmute.industries"
 
-[[author]]
-initials = "P."
-surname = "Prorock"
-fullname = "Mike Prorock"
-#role = "editor"
-organization = "Mesur"
-[author.address]
-email = "mike@mesur.io"
 %%%
 
 .# Abstract
