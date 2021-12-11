@@ -1,8 +1,8 @@
 CC ?= /usr/bin/cc
+DILITHIUM_MODE = -DDILITHIUM_MODE=3
 CFLAGS += -Wall -Wextra -Wpedantic -Wmissing-prototypes -Wredundant-decls \
   -Wshadow -Wvla -Wpointer-arith -O3 -fomit-frame-pointer 
 CFLAGS += -Wdeprecated 
-DDILITHIUM_MODE = -DDILITHIUM_MODE=3
 NISTFLAGS += -Wno-unused-result -O3 -fomit-frame-pointer
 SOURCES = ../ref/sign.c ../ref/packing.c ../ref/polyvec.c ../ref/poly.c ../ref/ntt.c \
   ../ref/reduce.c ../ref/rounding.c ../ref/randombytes.c \
@@ -21,7 +21,7 @@ AES_HEADERS = $(HEADERS) ../ref/fips202.h ../ref/aes256ctr.h
 WEBASM_COMPILER ?= emcc
 WEBASM_EXPORTS = _dilithiumGenerate, _dilithiumSign, _dilithiumVerify, _dilithiumVersion, _malloc
 WEBASM_FLAGS ?= -O3 -s WASM=1 \
-  -D DILITHIUM_MODE=3 \
+  ${DILITHIUM_MODE} \
   -s EXPORTED_FUNCTIONS="[$(WEBASM_EXPORTS)]"
 
 WEBASM_SOURCES = websign.c $(KECCAK_SOURCES)
@@ -31,9 +31,13 @@ WASM_HEADERS = -I ../ref/config.h -I ../ref/params.h -I ../ref/api.h -I ../ref/s
   -I common.h -I base64.h -I keypair.h -I uapi.h 
 WEBASM_OUTPUT = dilithium.html
 
-# base64.c
+CLI_HEADERS = cli.h $(KECCAK_HEADERS)
 CLI_SOURCES = cli.c $(KECCAK_SOURCES)
 CLI_OUTPUT = dilithium
+
+CLI_HEADERS_SIGN = cli_sign.h $(KECCAK_HEADERS)
+CLI_SOURCES_SIGN = cli_sign.c $(KECCAK_SOURCES)
+CLI_OUTPUT_SIGN = dsign
 
 .PHONY: all clean cli
 
@@ -47,12 +51,18 @@ web: $(WEBASM_SOURCES)
 	-o $(WEBASM_OUTPUT)
 	
 cli: \
-	cli_generate
+	cli_generate \
+	cli_sign
 
-cli_generate: $(CLI_SOURCES) $(HEADERS) 
+cli_generate: $(CLI_SOURCES) $(CLI_HEADERS) 
 	$(CC) \
 	-fPIC $(CFLAGS) $(DILITHIUM_MODE) \
 	-o $(CLI_OUTPUT) $(CLI_SOURCES)
+
+cli_sign: $(CLI_SOURCES_SIGN) $(CLI_HEADERS_SIGN) 
+	$(CC) \
+	-fPIC $(CFLAGS) $(DILITHIUM_MODE) \
+	-o $(CLI_OUTPUT_SIGN) $(CLI_SOURCES_SIGN)
 
 
 release:
