@@ -1,4 +1,4 @@
-const di = require("../util/dilithium.js");
+const di = require("./dilithium.js");
 const CRYPTO_BYTES = 2420;
 const CRYPTO_BYTES_B64 = 3229;
 const CRYPTO_PUBLICKEYBYTES_B64 = 1753;

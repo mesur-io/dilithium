@@ -13,7 +13,7 @@
     "postbuild": "cp ./util/dilithium.*  ./docs",
     "build:spec": "./spec/build-html.sh",
     "shove:spec": "git add ./spec; git commit -m 'Spec editorial'; git push origin master",
-    "pretest": "node ./node-js/sanity-test.js",
+    "test:sanity": "node ./node-js/sanity-test.js",
     "test": "jest"
   },
   "repository": {

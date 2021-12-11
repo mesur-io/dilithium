@@ -1,7 +1,9 @@
-import logo from "./logo.svg";
 import "./App.css";
 import { useEffect } from "react";
 import di from "@mesur/dilithium";
+
+import CrystVis from "crystvis-js";
+import { exampleFiles } from "./examples";
 
 function App() {
   useEffect(() => {
@@ -10,26 +12,22 @@ function App() {
       const privateKeyJwk = await di.generate();
       const message = "hello";
       const signature = await di.sign(message, privateKeyJwk);
-      const verified = await di.verify(signature, message, privateKeyJwk);
-      console.log({ privateKeyJwk, message, verified });
+      const verified = await di.verify(message, signature, privateKeyJwk);
+      console.log({ privateKeyJwk, message, signature, verified });
+      setTimeout(() => {
+        if (verified) {
+          const visualizer = new CrystVis("#visualizer", 800, 600);
+          visualizer.loadModels(exampleFiles["si8.xyz"], "xyz");
+          visualizer.displayModel("xyz");
+        }
+      }, 1 * 1000);
     })();
   }, []);
 
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <div id="visualizer"></div>
       </header>
     </div>
   );
