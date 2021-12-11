@@ -22,6 +22,10 @@ int main(int argc, char *argv[])
     int opt;
     char keyPath[MAX_ARG_SIZE];
     char messagePath[MAX_ARG_SIZE];
+    char key[CRYPTO_SECRETKEYBYTES_B64];
+    char *message;
+    FILE *stream;
+
     while ((opt = getopt(argc, argv, OPTSTR)) != -1)
     {
         switch (opt)
@@ -43,6 +47,13 @@ int main(int argc, char *argv[])
     }
 
     //if file at Keypath is CRYPTO_SECRETKEYBYTES_B64 use as is, otherwise check for json
+    if ((stream = fopen(keyPath, "rb")) == NULL) {
+        //try arg as a key itself
+        memcpy(key, keyPath, CRYPTO_SECRETKEYBYTES_B64);
+    } else {
+
+    }
+        
     //if message is a file path, load and sign file, otherwise sign string
 
     return EXIT_SUCCESS;
