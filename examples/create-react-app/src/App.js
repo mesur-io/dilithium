@@ -1,9 +1,16 @@
 import logo from "./logo.svg";
 import "./App.css";
+import { useEffect } from "react";
 import di from "@mesur/dilithium";
 
 function App() {
-  console.log(di);
+  useEffect(() => {
+    (async () => {
+      await di.init();
+      console.log(di);
+    })();
+  }, []);
+
   return (
     <div className="App">
       <header className="App-header">

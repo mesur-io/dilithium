@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "license": "Apache-2.0",
-  "main": "./util/dilithium.js",
+  "main": "./util/api.js",
   "directories": {
     "util": "util"
   },
@@ -12,6 +12,7 @@
     "build": "echo 'build module from wasm...'",
     "build:spec": "./spec/build-html.sh",
     "shove:spec": "git add ./spec; git commit -m 'Spec editorial'; git push origin master",
+    "pretest": "node ./node-js/sanity-test.js",
     "test": "jest"
   },
   "repository": {
