@@ -35,8 +35,8 @@ CLI_HEADERS = cli.h $(KECCAK_HEADERS)
 CLI_SOURCES = cli.c $(KECCAK_SOURCES)
 CLI_OUTPUT = dilithium
 
-CLI_HEADERS_SIGN = cli_sign.h $(KECCAK_HEADERS)
-CLI_SOURCES_SIGN = cli_sign.c $(KECCAK_SOURCES)
+CLI_HEADERS_SIGN = cli_sign.h ioutil.h $(KECCAK_HEADERS)
+CLI_SOURCES_SIGN = cli_sign.c ioutil.c $(KECCAK_SOURCES)
 CLI_OUTPUT_SIGN = dsign
 
 .PHONY: all clean cli
