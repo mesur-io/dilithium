@@ -1,5 +1,5 @@
 {
-  "name": "dilithium",
+  "name": "@mesur/dilithium",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -7,7 +7,9 @@
     "doc": "docs"
   },
   "scripts": {
-    "build": "./spec/build-html.sh",
+    "prepare": "echo 'build wasm...'",
+    "build": "echo 'build module from wasm...'",
+    "build:spec": "./spec/build-html.sh",
     "shove:spec": "git add ./spec; git commit -m 'Spec editorial'; git push origin master"
   },
   "repository": {
