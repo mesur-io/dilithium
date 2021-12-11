@@ -7,7 +7,8 @@
     "doc": "docs"
   },
   "scripts": {
-    "build": "./spec/build-html.sh"
+    "build": "./spec/build-html.sh",
+    "shove:spec": "git add ./spec; git commit -m 'Spec editorial'; git push origin master"
   },
   "repository": {
     "type": "git",
