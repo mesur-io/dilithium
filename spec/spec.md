@@ -79,6 +79,9 @@ message
 sha256
 : The SHA-256 hash function defined in [@!RFC6234].
 
+shake256
+: The SHAKE256 hash function defined in [@!RFC8702].
+
 # Core Operations
 
 This section defines core operations used by the scheme.
@@ -89,17 +92,83 @@ The core operations in this section depend on several parameters:
 
 <!-- IF we want to parameterize we can... recommend we remove this section, not provide only 1 value for any parameter. -->
 
-- H, a hash function that MUST be a secure cryptographic hash function, e.g. SHA-256.
+- H, a hash function that MUST be a secure cryptographic hash function, e.g. SHAKE256.
+
+## DerivePublicKey
+
+DerivePublicKey produces a public key from a private key.
+
+```
+PK = DerivePublicKey(SK)
+```
+
+Inputs:
+
+- SK, an (integer, set of integer, set of polynomials) (TODO FIXME).
+
+Outputs:
+
+- PK, a public key
+
+Procedure:
+
+1. Remove d
+
+2. Remove ds
+
+3. calculate xs
+
+4. return x, xs, kty, pset
 
 ## KeyValidate
 
 KeyValidate checks if the public key is valid.
 
-// TODO
+As an optimization, implementations MAY cache the result of KeyValidate in order to avoid unnecessarily repeating validation for known keys.
+
+```
+result = KeyValidate(PK)
+```
+
+Inputs:
+
+- PK, a public key in the format output by DerivePublicKey.
+
+Outputs:
+
+- result, either VALID or INVALID
+
+Procedure:
+
+1. calculate xs1 from x
+
+2. result = true && xs1 === xs
+
+3. result = result && xs.length = 32
+
+4. return result
 
 ## KeyGenerate
 
-// TODO
+KeyGenerate produces a private key
+
+```
+SK = KeyGenerate()
+```
+
+Inputs:
+
+- RAND, a random number generator? TODO FIXME.
+
+Outputs:
+
+- SK, a private key
+
+Procedure:
+
+1. ???
+
+2. return SK
 
 ## Sign
 
