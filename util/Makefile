@@ -21,7 +21,9 @@ AES_HEADERS = $(HEADERS) ../ref/fips202.h ../ref/aes256ctr.h
 WEBASM_COMPILER ?= emcc
 WEBASM_EXPORTS = _dilithiumGenerate, _dilithiumSign, _dilithiumVerify, _dilithiumVersion, _malloc
 WEBASM_FLAGS ?= -O3 -s WASM=1 \
-  ${DILITHIUM_MODE} -s MODULARIZE -s EXPORT_NAME="dilithium" \
+  ${DILITHIUM_MODE} \
+  -s MODULARIZE -s EXPORT_NAME="dilithium" \
+  -s SINGLE_FILE=1 \
   -s EXPORTED_FUNCTIONS="[$(WEBASM_EXPORTS)]"
 
 WEBASM_SOURCES = websign.c $(KECCAK_SOURCES)
@@ -39,6 +41,10 @@ CLI_HEADERS_SIGN = cli_sign.h ioutil.h $(KECCAK_HEADERS)
 CLI_SOURCES_SIGN = cli_sign.c ioutil.c $(KECCAK_SOURCES)
 CLI_OUTPUT_SIGN = dsign
 
+CLI_HEADERS_VERIFY = cli_verify.h ioutil.h $(KECCAK_HEADERS)
+CLI_SOURCES_VERIFY = cli_verify.c ioutil.c $(KECCAK_SOURCES)
+CLI_OUTPUT_VERIFY = dverify
+
 .PHONY: all clean cli
 
 all: \
@@ -52,7 +58,8 @@ web: $(WEBASM_SOURCES)
 	
 cli: \
 	cli_generate \
-	cli_sign
+	cli_sign \
+	cli_verify
 
 cli_generate: $(CLI_SOURCES) $(CLI_HEADERS) 
 	$(CC) \
@@ -64,11 +71,17 @@ cli_sign: $(CLI_SOURCES_SIGN) $(CLI_HEADERS_SIGN)
 	-fPIC $(CFLAGS) $(DILITHIUM_MODE) \
 	-o $(CLI_OUTPUT_SIGN) $(CLI_SOURCES_SIGN)
 
+cli_verify: $(CLI_SOURCES_VERIFY) $(CLI_HEADERS_VERIFY) 
+	$(CC) \
+	-fPIC $(CFLAGS) $(DILITHIUM_MODE) \
+	-o $(CLI_OUTPUT_VERIFY) $(CLI_SOURCES_VERIFY)
+
 
 release:
 	cp -v wasm_test.html ../docs/index.html
 	cp -v dilithium.js ../docs/
-	cp -v dilithium.wasm ../docs/
+# this is only required if building two files
+# cp -v dilithium.wasm ../docs/
 
 clean:
 	rm -f *.gcno *.gcda *.lcov
