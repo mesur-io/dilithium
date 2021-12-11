@@ -1,0 +1,28 @@
+{
+  "name": "@mesur/dilithium",
+  "version": "1.0.0",
+  "description": "",
+  "license": "Apache-2.0",
+  "main": "./util/dilithium.js",
+  "directories": {
+    "util": "util"
+  },
+  "scripts": {
+    "prepare": "cd ./util && make web",
+    "build": "echo 'build module from wasm...'",
+    "build:spec": "./spec/build-html.sh",
+    "shove:spec": "git add ./spec; git commit -m 'Spec editorial'; git push origin master",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mesur-io/dilithium.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mesur-io/dilithium/issues"
+  },
+  "homepage": "https://github.com/mesur-io/dilithium#readme",
+  "devDependencies": {
+    "jest": "^27.4.4"
+  }
+}
