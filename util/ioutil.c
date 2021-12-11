@@ -32,3 +32,48 @@ int getFile(char **buffer, FILE *f, bool close)
         return -2;
     }
 }
+
+int trimmable(char c) {
+    return (c == ' ' || c == '\t' || c == '\n');
+}
+int get_first_position(char const *str) {
+    int i = 0;
+    while (trimmable(str[i])) {
+        i += 1;
+    }
+    return (i);
+}
+int get_str_len(char const *str) {
+    int len = 0;
+    while (str[len] != '\0') {
+        len += 1;
+    }
+    return (len);
+}
+int get_last_position(char const *str) {
+    int i = get_str_len(str) - 1;
+    while (trimmable(str[i])) {
+        i -= 1;
+    }
+    return (i);
+}
+int get_trim_len(char const *str) {
+    return (get_last_position(str) - get_first_position(str));
+}
+char *strtrim(char const *str) {
+    char *trim = NULL;
+    int i, len, start;
+    if (str != NULL) {
+        i = 0;
+        len = get_trim_len(str) + 1;
+        trim = (char *)malloc(len);
+        start = get_first_position(str);
+        while (i < len) {
+            trim[i] = str[start];
+            i += 1;
+            start += 1;
+        }
+        trim[i] = '\0';
+    }
+    return (trim);
+}

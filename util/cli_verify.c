@@ -13,7 +13,7 @@
 #include "ioutil.h"
 #include "keypair.h"
 #include "uapi.h"
-#include "cli_sign.h"
+#include "cli_verify.h"
 
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunused-parameter"
@@ -22,10 +22,12 @@ int main(int argc, char *argv[])
     int opt;
     int signRet = 0;
     char signature[CRYPTO_BYTES_B64];
+    char sigPath[MAX_ARG_SIZE];
     char keyPath[MAX_ARG_SIZE];
     char messagePath[MAX_ARG_SIZE];
-    char key[CRYPTO_SECRETKEYBYTES_B64];
+    char key[CRYPTO_PUBLICKEYBYTES_B64];
     char *message;
+    FILE *sigStream;
     FILE *keyStream;
     FILE *messageStream;
     
@@ -35,6 +37,10 @@ int main(int argc, char *argv[])
         {
         case 'h':
             return usage();
+        case 's':
+            strncpy (sigPath, optarg, sizeof (sigPath));
+            sigPath[sizeof (sigPath) - 1] = '\0';
+            break;
         case 'k':
             strncpy (keyPath, optarg, sizeof (keyPath));
             keyPath[sizeof (keyPath) - 1] = '\0';
@@ -51,12 +57,31 @@ int main(int argc, char *argv[])
         }
     }
 
-    //if file at Keypath is CRYPTO_SECRETKEYBYTES_B64 use as is, otherwise check for json (later)
+    //if file at sigpath is CRYPTO_BYTES_B64 use as is, otherwise check for json (later)
+    sigStream = fopen(sigPath, "rb");
+    if (sigStream == NULL)
+    {
+        //try arg as a key itself
+        memcpy(signature, sigPath, CRYPTO_PUBLICKEYBYTES_B64);
+    }
+    else
+    {
+        char *sigBuffer;
+
+        int fileRet = getFile(&sigBuffer, sigStream, true);
+        if (fileRet < 0) {
+            return fileRet;
+        } 
+        //locking this as a key for now
+        memcpy(signature, sigBuffer, CRYPTO_PUBLICKEYBYTES_B64);
+    }
+
+    //if file at Keypath is CRYPTO_PUBLICKEYBYTES_B64 use as is, otherwise check for json (later)
     keyStream = fopen(keyPath, "rb");
     if (keyStream == NULL)
     {
         //try arg as a key itself
-        memcpy(key, keyPath, CRYPTO_SECRETKEYBYTES_B64);
+        memcpy(key, keyPath, CRYPTO_PUBLICKEYBYTES_B64);
     }
     else
     {
@@ -67,7 +92,7 @@ int main(int argc, char *argv[])
             return fileRet;
         } 
         //locking this as a key for now
-        memcpy(key, keyBuffer, CRYPTO_SECRETKEYBYTES_B64);
+        memcpy(key, keyBuffer, CRYPTO_PUBLICKEYBYTES_B64);
     }
 
     //if message is a file path, load and sign file, otherwise sign string
@@ -91,18 +116,18 @@ int main(int argc, char *argv[])
         memcpy(message, messageBuffer, length);
     }
 
-    signRet = signMessage(signature, message, key);
+    signRet = verfiyMessage(signature, message, key);
     if (signRet < 0) {
-        return signRet;
+        printf("sigRet: %d\n", signRet);
     }
     printf("%s\n", signature);
     return EXIT_SUCCESS;
 }
 #pragma GCC diagnostic pop
 
-int signMessage(char *sm, const char *m, const char *sk)
+int verfiyMessage(char *sm, const char *m, const char *pk)
 {
-    return sign(sm, m, sk);
+    return verify(sm, m, pk);
 }
 
 int usage(void)
