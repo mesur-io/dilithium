@@ -1376,10 +1376,35 @@ classical and quantum attacks.  Under a parameter set at NIST level 3, a
           <h4 id="name-parameter-sets">
 <a href="#section-3.1.1" class="section-number selfRef">3.1.1. </a><a href="#name-parameter-sets" class="section-name selfRef">Parameter sets</a>
           </h4>
-<p id="section-3.1.1-1">|NIST Level|Matrix Size|memory in bits|
-|2|4x4|97.8|
-|3|6x5|138.7|
-|5|8x7|187.4|<a href="#section-3.1.1-1" class="pilcrow">¶</a></p>
+<p id="section-3.1.1-1">Parameter sets are identified by the corresponding NIST level per the
+table below<a href="#section-3.1.1-1" class="pilcrow">¶</a></p>
+<table class="center" id="table-1">
+            <caption><a href="#table-1" class="selfRef">Table 1</a></caption>
+<thead>
+              <tr>
+                <th class="text-left" rowspan="1" colspan="1">NIST Level</th>
+                <th class="text-left" rowspan="1" colspan="1">Matrix Size</th>
+                <th class="text-left" rowspan="1" colspan="1">memory in bits</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="text-left" rowspan="1" colspan="1">2</td>
+                <td class="text-left" rowspan="1" colspan="1">4x4</td>
+                <td class="text-left" rowspan="1" colspan="1">97.8</td>
+              </tr>
+              <tr>
+                <td class="text-left" rowspan="1" colspan="1">3</td>
+                <td class="text-left" rowspan="1" colspan="1">6x5</td>
+                <td class="text-left" rowspan="1" colspan="1">138.7</td>
+              </tr>
+              <tr>
+                <td class="text-left" rowspan="1" colspan="1">5</td>
+                <td class="text-left" rowspan="1" colspan="1">8x7</td>
+                <td class="text-left" rowspan="1" colspan="1">187.4</td>
+              </tr>
+            </tbody>
+          </table>
 </section>
 </div>
 </section>
@@ -1416,25 +1441,31 @@ classical and quantum attacks.  Under a parameter set at NIST level 3, a
 <a href="#section-4" class="section-number selfRef">4. </a><a href="#name-key-type-pqk" class="section-name selfRef">Key Type "PQK"</a>
       </h2>
 <p id="section-4-1">A new key type (kty) value "PQK" (Post Quantum Key Pair) is defined for
-public key algorithms that use octet strings as private and public
-keys and that support cryptographic sponge fucntions. It has the following parameters:<a href="#section-4-1" class="pilcrow">¶</a></p>
+public key algorithms that use base 64 encoded strings of the underlying binary materia
+as private and public keys and that support cryptographic sponge fucntions.
+It has the following parameters:<a href="#section-4-1" class="pilcrow">¶</a></p>
 <p id="section-4-2">o The parameter "kty" MUST be "PQK".<a href="#section-4-2" class="pilcrow">¶</a></p>
-<p id="section-4-3">o The parameter "pset" MUST be one of the described parameter sets "2", "3", or "5".<br>
-Parameter set "3" or above SHOULD be used for any situation requiring at least
-128bits of security against both quantum and classical attacks<a href="#section-4-3" class="pilcrow">¶</a></p>
-<p id="section-4-4">o The parameter "x" MUST be present and contain the public key
-encoded using the base64url [RFC4648] encoding.<a href="#section-4-4" class="pilcrow">¶</a></p>
-<p id="section-4-5">o The parameter "xs" MAY be present and contain the shake256 of the public key
+<p id="section-4-3">o The patameter "alg" MUST be specified, and at this time MAY only be "CRYDI" until
+other algorithms are specified<a href="#section-4-3" class="pilcrow">¶</a></p>
+<p id="section-4-4">o The parameter "pset" MUST be specfied to indicate the not only paramter set
+in use for the algorithm, but SHOULD also reflect the targeted NIST level for the
+algorithm in combination with the specified paramter set.
+For "alg" "CRYDI" one of the described parameter sets "2", "3", or "5" MUST be
+specified. Parameter set "3" or above SHOULD be used with "CRYDI" for any situation
+requiring at least 128bits of security against both quantum and classical attacks<a href="#section-4-4" class="pilcrow">¶</a></p>
+<p id="section-4-5">o The parameter "x" MUST be present and contain the public key
 encoded using the base64url [RFC4648] encoding.<a href="#section-4-5" class="pilcrow">¶</a></p>
-<p id="section-4-6">o The parameter "d" MUST be present for private keys and contain the
+<p id="section-4-6">o The parameter "xs" MAY be present and contain the shake256 of the public key
+encoded using the base64url [RFC4648] encoding.<a href="#section-4-6" class="pilcrow">¶</a></p>
+<p id="section-4-7">o The parameter "d" MUST be present for private keys and contain the
 private key encoded using the base64url encoding. This parameter
-MUST NOT be present for public keys.<a href="#section-4-6" class="pilcrow">¶</a></p>
-<p id="section-4-7">o The parameter "ds" MAY be present for private keys and contain the
-shake256 of the private key encoded using the base64url encoding. This parameter
 MUST NOT be present for public keys.<a href="#section-4-7" class="pilcrow">¶</a></p>
-<p id="section-4-8">When calculating JWK Thumbprints [RFC7638], the three public key
+<p id="section-4-8">o The parameter "ds" MAY be present for private keys and contain the
+shake256 of the private key encoded using the base64url encoding. This parameter
+MUST NOT be present for public keys.<a href="#section-4-8" class="pilcrow">¶</a></p>
+<p id="section-4-9">When calculating JWK Thumbprints [RFC7638], the four public key
 fields are included in the hash input in lexicographic order:
-"kty", and "x".<a href="#section-4-8" class="pilcrow">¶</a></p>
+"kty", "alg", "pset", and "x".<a href="#section-4-9" class="pilcrow">¶</a></p>
 <div id="publickeyjwk">
 <section id="section-4.1">
         <h3 id="name-publickeyjwk">
@@ -1443,6 +1474,7 @@ fields are included in the hash input in lexicographic order:
 <div class="artwork art-text alignLeft" id="section-4.1-1">
 <pre>{
     "kty": "PQK",
+    "alg": "CRYDI",
     "pset": "3",
     "xs": "z3uZQVjflnRZDSZn1e8g4oKH4YUU6TnpvkU4WrrGdXw=",
     "x": "z7...",
@@ -1459,6 +1491,7 @@ fields are included in the hash input in lexicographic order:
 <div class="artwork art-text alignLeft" id="section-4.2-1">
 <pre>{
     "kty": "PQK",
+    "alg": "CRYDI",
     "pset": "3",
     "xs": "z3uZQVjflnRZDSZn1e8g4oKH4YUU6TnpvkU4WrrGdXw=",
     "ds": "5DuZ8XoJQirc/5TE23tBcoGoHo+JTj1+9ULLXtCiySU=",
@@ -1506,7 +1539,7 @@ signing is "CRYDI". These subtypes MUST NOT be used for key agreement.<a href="#
 defined in [TODO] to the private key (as private key), public key
 (as public key), and the JWS Signing Input (as message). The
 resulting signature is the JWS Signature. All inputs and outputs are
-octet strings.<a href="#section-5.1.1-1" class="pilcrow">¶</a></p>
+base 64 encoded strings.<a href="#section-5.1.1-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="verifiying">
@@ -1517,7 +1550,7 @@ octet strings.<a href="#section-5.1.1-1" class="pilcrow">¶</a></p>
 <p id="section-5.1.2-1">Verification is performed by applying the verification algorithm
 defined in [TODO] to the public key (as public key), the JWS
 Signing Input (as message), and the JWS Signature (as signature).
-All inputs are octet strings. If the algorithm accepts, the
+All inputs are base 64 encoded strings. If the algorithm accepts, the
 signature is valid; otherwise, the signature is invalid.<a href="#section-5.1.2-1" class="pilcrow">¶</a></p>
 </section>
 </div>
@@ -1544,7 +1577,30 @@ For the sign, verify and proof schemes, the use of KeyValidate is REQUIRED.<a hr
         <h3 id="name-side-channel-attacks">
 <a href="#section-6.2" class="section-number selfRef">6.2. </a><a href="#name-side-channel-attacks" class="section-name selfRef">Side channel attacks</a>
         </h3>
-<p id="section-6.2-1">Implementations of the signing algorithm SHOULD protect the secret key from side-channel attacks. One method for protecting against certain side-channel attacks is ensuring that the implementation executes exactly the same sequence of instructions and performs exactly the same memory accesses, for any value of the secret key. ( this copied verbatum form <a href="https://raw.githubusercontent.com/mattrglobal/bbs-signatures-spec/master/spec.md">here</a>).<a href="#section-6.2-1" class="pilcrow">¶</a></p>
+<p id="section-6.2-1">Implementations of the signing algorithm SHOULD protect the secret key from side-channel attacks.
+Multiple best practices exist to protect against side-channel attacks.  Any implementation
+of the the CRYSTALS-Dilithium signing algorithm SHOULD utilize the following best practices
+at a minimum:<a href="#section-6.2-1" class="pilcrow">¶</a></p>
+<ul>
+<li id="section-6.2-2.1">
+            <p id="section-6.2-2.1.1">Constant timing - the implementation should ensure that constant time is utilized in operations<a href="#section-6.2-2.1.1" class="pilcrow">¶</a></p>
+</li>
+<li id="section-6.2-2.2">
+            <p id="section-6.2-2.2.1">Sequence and memory access persistance - the implemention SHOULD execute the exact same
+sequence of instructions (at a machine level) with the exact same memory access independent
+of which polynomial is being operated on.<a href="#section-6.2-2.2.1" class="pilcrow">¶</a></p>
+</li>
+<li id="section-6.2-2.3">
+            <p id="section-6.2-2.3.1">Uniform sampling - uniform sampling is the default in CRYSTALS-Dilithium to prevent information
+leakage, however care should be given in implementations to preserve the property of uniform
+sampling in implementation.<a href="#section-6.2-2.3.1" class="pilcrow">¶</a></p>
+</li>
+<li id="section-6.2-2.4">
+            <p id="section-6.2-2.4.1">Secrecy of S1 - utmost care must be given to protection of S1 and to prevent information or
+power leakage.  As is the case with most proposed lattice based approaches to date, fogery and
+other attacks may succeed through <a href="https://eprint.iacr.org/2018/821.pdf">leakage of S1</a> through side channel mechanisms.<a href="#section-6.2-2.4.1" class="pilcrow">¶</a></p>
+</li>
+</ul>
 </section>
 </div>
 <div id="randomness-considerations">
@@ -1564,7 +1620,7 @@ For the sign, verify and proof schemes, the use of KeyValidate is REQUIRED.<a hr
       </h2>
 <p id="section-7-1">The following has NOT YET been added to the "JSON Web Key Types" registry:<a href="#section-7-1" class="pilcrow">¶</a></p>
 <p id="section-7-2">o "kty" Parameter Value: "PQK"
-o Key Type Description: Octet string key pairs
+o Key Type Description: Base 64 encoded string key pairs
 o JOSE Implementation Requirements: Optional
 o Change Controller: IESG
 o Specification Document(s): Section 2 of this document (RFC TBD)<a href="#section-7-2" class="pilcrow">¶</a></p>
@@ -1677,15 +1733,15 @@ o Specification Document(s): Section 3.1 of this document (RFC TBD)<a href="#sec
 <a href="#section-9" class="section-number selfRef">9. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
       </h2>
 <dl class="references">
+<dt id="RFC8702">[RFC8702]</dt>
+<dd>
+<span class="refAuthor">Kampanakis, P.</span><span class="refAuthor"> and Q. Dang</span>, <span class="refTitle">"Use of the SHAKE One-Way Hash Functions in the Cryptographic Message Syntax (CMS)"</span>, <span class="seriesInfo">RFC 8702</span>, <span class="seriesInfo">DOI 10.17487/RFC8702</span>, <time datetime="2020-01">January 2020</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc8702">https://www.rfc-editor.org/info/rfc8702</a>&gt;</span>. </dd>
 <dt id="RFC2119">[RFC2119]</dt>
 <dd>
 <span class="refAuthor">Bradner, S.</span>, <span class="refTitle">"Key words for use in RFCs to Indicate Requirement Levels"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 2119</span>, <span class="seriesInfo">DOI 10.17487/RFC2119</span>, <time datetime="1997-03">March 1997</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc2119">https://www.rfc-editor.org/info/rfc2119</a>&gt;</span>. </dd>
 <dt id="RFC6234">[RFC6234]</dt>
 <dd>
 <span class="refAuthor">Eastlake 3rd, D.</span><span class="refAuthor"> and T. Hansen</span>, <span class="refTitle">"US Secure Hash Algorithms (SHA and SHA-based HMAC and HKDF)"</span>, <span class="seriesInfo">RFC 6234</span>, <span class="seriesInfo">DOI 10.17487/RFC6234</span>, <time datetime="2011-05">May 2011</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc6234">https://www.rfc-editor.org/info/rfc6234</a>&gt;</span>. </dd>
-<dt id="RFC8702">[RFC8702]</dt>
-<dd>
-<span class="refAuthor">Kampanakis, P.</span><span class="refAuthor"> and Q. Dang</span>, <span class="refTitle">"Use of the SHAKE One-Way Hash Functions in the Cryptographic Message Syntax (CMS)"</span>, <span class="seriesInfo">RFC 8702</span>, <span class="seriesInfo">DOI 10.17487/RFC8702</span>, <time datetime="2020-01">January 2020</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc8702">https://www.rfc-editor.org/info/rfc8702</a>&gt;</span>. </dd>
 </dl>
 </section>
 <div id="authors-addresses">
