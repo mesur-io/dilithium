@@ -62,7 +62,7 @@ int main(int argc, char *argv[])
     if (sigStream == NULL)
     {
         //try arg as a key itself
-        memcpy(signature, sigPath, CRYPTO_PUBLICKEYBYTES_B64);
+        memcpy(signature, sigPath, CRYPTO_BYTES_B64);
     }
     else
     {
@@ -72,8 +72,7 @@ int main(int argc, char *argv[])
         if (fileRet < 0) {
             return fileRet;
         } 
-        //locking this as a key for now
-        memcpy(signature, sigBuffer, CRYPTO_PUBLICKEYBYTES_B64);
+        memcpy(signature, sigBuffer, CRYPTO_BYTES_B64);
     }
 
     //if file at Keypath is CRYPTO_PUBLICKEYBYTES_B64 use as is, otherwise check for json (later)

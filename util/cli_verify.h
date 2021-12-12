@@ -10,5 +10,4 @@
 int verfiyMessage(char* sm, const char* m, const char* pk);
 int usage(void);
 
-
 #endif
