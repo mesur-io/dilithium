@@ -11,11 +11,12 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 14.x
+
       - name: Install
         run: npm i
 
       - name: Build Spec
-        run: npm run build:spec
+        run: npm run spec:build
 
       - name: Deploy Spec
         uses: peaceiris/actions-gh-pages@v3

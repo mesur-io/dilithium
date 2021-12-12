@@ -8,11 +8,13 @@
     "util": "util"
   },
   "scripts": {
-    "prepare": "cd ./util && make web",
+    "prebuild": "cd ./util && make web",
     "build": "echo 'build module from wasm...'",
-    "build:spec": "./spec/build-html.sh",
-    "shove:spec": "git add ./spec; git commit -m 'Spec editorial'; git push origin master",
-    "pretest": "node ./node-js/sanity-test.js",
+    "postbuild": "cp ./util/dilithium.*  ./docs",
+    "spec:build": "./spec/build-html.sh",
+    "spec:shove": "git add ./spec; git commit -m 'Spec editorial'; git push origin master",
+    "test:sanity": "node ./util/sanity-test.js",
+    "test:vectors:generate": "node ./util/api.generate.vectors.js",
     "test": "jest"
   },
   "repository": {
