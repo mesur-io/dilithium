@@ -145,7 +145,11 @@ classical and quantum attacks.  Under a parameter set at NIST level 3, a
 
 ### Parameter sets
 
+Parameter sets are identified by the corresponding NIST level per the
+table below
+
 |NIST Level|Matrix Size|memory in bits|
+|---|---|---|
 |2|4x4|97.8|
 |3|6x5|138.7|
 |5|8x7|187.4|
@@ -165,14 +169,21 @@ classical and quantum attacks.  Under a parameter set at NIST level 3, a
 # Key Type "PQK"
 
 A new key type (kty) value "PQK" (Post Quantum Key Pair) is defined for
-public key algorithms that use octet strings as private and public
-keys and that support cryptographic sponge fucntions. It has the following parameters:
+public key algorithms that use base 64 encoded strings of the underlying binary materia
+as private and public keys and that support cryptographic sponge fucntions. 
+It has the following parameters:
 
 o The parameter "kty" MUST be "PQK".
 
-o The parameter "pset" MUST be one of the described parameter sets "2", "3", or "5".  
-Parameter set "3" or above SHOULD be used for any situation requiring at least
-128bits of security against both quantum and classical attacks
+o The patameter "alg" MUST be specified, and at this time MAY only be "CRYDI" until
+other algorithms are specified
+
+o The parameter "pset" MUST be specfied to indicate the not only paramter set
+in use for the algorithm, but SHOULD also reflect the targeted NIST level for the 
+algorithm in combination with the specified paramter set. 
+For "alg" "CRYDI" one of the described parameter sets "2", "3", or "5" MUST be 
+specified. Parameter set "3" or above SHOULD be used with "CRYDI" for any situation 
+requiring at least 128bits of security against both quantum and classical attacks
 
 o The parameter "x" MUST be present and contain the public key
 encoded using the base64url [RFC4648] encoding.
@@ -188,15 +199,16 @@ o The parameter "ds" MAY be present for private keys and contain the
 shake256 of the private key encoded using the base64url encoding. This parameter
 MUST NOT be present for public keys.
 
-When calculating JWK Thumbprints [RFC7638], the three public key
+When calculating JWK Thumbprints [RFC7638], the four public key
 fields are included in the hash input in lexicographic order:
-"kty", and "x".
+"kty", "alg", "pset", and "x".
 
 ## publicKeyJwk
 
 ```
 {
     "kty": "PQK",
+    "alg": "CRYDI",
     "pset": "3",
     "xs": "z3uZQVjflnRZDSZn1e8g4oKH4YUU6TnpvkU4WrrGdXw=",
     "x": "z7...",
@@ -208,6 +220,7 @@ fields are included in the hash input in lexicographic order:
 ```
 {
     "kty": "PQK",
+    "alg": "CRYDI",
     "pset": "3",
     "xs": "z3uZQVjflnRZDSZn1e8g4oKH4YUU6TnpvkU4WrrGdXw=",
     "ds": "5DuZ8XoJQirc/5TE23tBcoGoHo+JTj1+9ULLXtCiySU=",
@@ -244,14 +257,14 @@ Signing for these is performed by applying the signing algorithm
 defined in [TODO] to the private key (as private key), public key
 (as public key), and the JWS Signing Input (as message). The
 resulting signature is the JWS Signature. All inputs and outputs are
-octet strings.
+base 64 encoded strings.
 
 ### Verifiying
 
 Verification is performed by applying the verification algorithm
 defined in [TODO] to the public key (as public key), the JWS
 Signing Input (as message), and the JWS Signature (as signature).
-All inputs are octet strings. If the algorithm accepts, the
+All inputs are base 64 encoded strings. If the algorithm accepts, the
 signature is valid; otherwise, the signature is invalid.
 
 # Security Considerations
@@ -263,7 +276,21 @@ For the sign, verify and proof schemes, the use of KeyValidate is REQUIRED.
 
 ## Side channel attacks
 
-Implementations of the signing algorithm SHOULD protect the secret key from side-channel attacks. One method for protecting against certain side-channel attacks is ensuring that the implementation executes exactly the same sequence of instructions and performs exactly the same memory accesses, for any value of the secret key. ( this copied verbatum form [here](https://raw.githubusercontent.com/mattrglobal/bbs-signatures-spec/master/spec.md)).
+Implementations of the signing algorithm SHOULD protect the secret key from side-channel attacks. 
+Multiple best practices exist to protect against side-channel attacks.  Any implementation
+of the the CRYSTALS-Dilithium signing algorithm SHOULD utilize the following best practices
+at a minimum:
+
+- Constant timing - the implementation should ensure that constant time is utilized in operations
+- Sequence and memory access persistance - the implemention SHOULD execute the exact same 
+sequence of instructions (at a machine level) with the exact same memory access independent
+of which polynomial is being operated on.
+- Uniform sampling - uniform sampling is the default in CRYSTALS-Dilithium to prevent information
+leakage, however care should be given in implementations to preserve the property of uniform
+sampling in implementation.
+- Secrecy of S1 - utmost care must be given to protection of S1 and to prevent information or 
+power leakage.  As is the case with most proposed lattice based approaches to date, fogery and
+other attacks may succeed through [leakage of S1](https://eprint.iacr.org/2018/821.pdf) through side channel mechanisms.
 
 ## Randomness considerations
 
@@ -274,7 +301,7 @@ It is recommended that the all nonces are from a trusted source of randomness.
 The following has NOT YET been added to the "JSON Web Key Types" registry:
 
 o "kty" Parameter Value: "PQK"
-o Key Type Description: Octet string key pairs
+o Key Type Description: Base 64 encoded string key pairs
 o JOSE Implementation Requirements: Optional
 o Change Controller: IESG
 o Specification Document(s): Section 2 of this document (RFC TBD)
