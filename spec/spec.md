@@ -17,7 +17,7 @@ initials = "M."
 surname = "Prorock"
 fullname = "Michael Prorock"
 #role = "editor"
-organization = "Mesur"
+organization = "mesur.io"
 [author.address]
 email = "mprorock@mesur.io"
 
@@ -136,81 +136,9 @@ Parameter sets
 |3|6x5|138.7|
 |5|8x7|187.4|
 
-## DerivePublicKey
+## Generate Key Pair
 
-DerivePublicKey produces a public key from a private key.
-
-```
-PK = DerivePublicKey(SK)
-```
-
-Inputs:
-
-- SK, an (integer, set of integer, set of polynomials) (TODO FIXME).
-
-Outputs:
-
-- PK, a public key
-
-Procedure:
-
-1. Remove d
-
-2. Remove ds
-
-3. calculate xs
-
-4. return x, xs, kty, pset
-
-## KeyValidate
-
-KeyValidate checks if the public key is valid.
-
-As an optimization, implementations MAY cache the result of KeyValidate in order to avoid unnecessarily repeating validation for known keys.
-
-```
-result = KeyValidate(PK)
-```
-
-Inputs:
-
-- PK, a public key in the format output by DerivePublicKey.
-
-Outputs:
-
-- result, either VALID or INVALID
-
-Procedure:
-
-1. calculate xs1 from x
-
-2. result = true && xs1 === xs
-
-3. result = result && xs.length = 32
-
-4. return result
-
-## KeyGenerate
-
-KeyGenerate produces a private key
-
-```
-SK = KeyGenerate()
-```
-
-Inputs:
-
-- RAND, a random number generator? TODO FIXME.
-
-Outputs:
-
-- SK, a private key
-
-Procedure:
-
-1. ???
-
-2. return SK
+//TODO
 
 ## Sign
 
@@ -364,14 +292,14 @@ o Specification Document(s): Section 2 of this document (RFC TBD)
 o Parameter Name: "d"
 o Parameter Description: The private key
 o Parameter Information Class: Private
-o Used with "kty" Value(s): "OKP"
+o Used with "kty" Value(s): "PQK"
 o Change Controller: IESG
 o Specification Document(s): Section 2 of RFC 8037
 
 o Parameter Name: "x"
 o Parameter Description: The public key
 o Parameter Information Class: Public
-o Used with "kty" Value(s): "OKP"
+o Used with "kty" Value(s): "PQK"
 o Change Controller: IESG
 o Specification Document(s): Section 2 of RFC 8037
 
