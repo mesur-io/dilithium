@@ -18,7 +18,7 @@ describe("module", () => {
     it("should generate key", async () => {
       const privateKeyJwk = await api.generate();
       expect(privateKeyJwk.kty).toBe("PQK");
-      expect(privateKeyJwk.alg).toBe("DICRY");
+      expect(privateKeyJwk.alg).toBe("CRYDI");
       expect(privateKeyJwk.pset).toBe("3");
       // TODO: add encoded length tests
       expect(privateKeyJwk.xs).toBeDefined();

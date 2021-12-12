@@ -65,7 +65,7 @@ int generate(struct Keypair *keypair)
     Base64encode(keypair->d, (const char*) sk, CRYPTO_SECRETKEYBYTES);
 
     strcpy(keypair->kty, "PQK");
-    strcpy(keypair->alg, "DICRY");
+    strcpy(keypair->alg, "CRYDI");
     strcpy(keypair->pset, "3");
     
     if (VDEBUG) printf("\tapi:generate::encoded\n");

@@ -5,7 +5,7 @@
     "type": "JsonWebKey2020",
     "publicKeyJwk": {
       "kty": "PQK",
-      "alg": "DICRY",
+      "alg": "CRYDI",
       "pset": "3",
       "xs": "A/pT6uRfa621uv5JYafJE27YHmhPABeoJspItrU7hAE=",
       "ds": "KjSJQ3U6z5cYazt2KSd88zHQw8iuotTLOJ13r2DxNLE=",
@@ -13,7 +13,7 @@
     },
     "privateKeyJwk": {
       "kty": "PQK",
-      "alg": "DICRY",
+      "alg": "CRYDI",
       "pset": "3",
       "xs": "A/pT6uRfa621uv5JYafJE27YHmhPABeoJspItrU7hAE=",
       "ds": "KjSJQ3U6z5cYazt2KSd88zHQw8iuotTLOJ13r2DxNLE=",

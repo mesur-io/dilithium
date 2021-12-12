@@ -13,13 +13,13 @@ value = "dilithium-jose-00"
 status = "informational"
 
 [[author]]
-initials = "P."
+initials = "M."
 surname = "Prorock"
-fullname = "Mike Prorock"
+fullname = "Michael Prorock"
 #role = "editor"
 organization = "Mesur"
 [author.address]
-email = "mike@mesur.io"
+email = "mprorock@mesur.io"
 
 [[author]]
 initials = "O."
@@ -34,7 +34,12 @@ email = "orie@transmute.industries"
 
 .# Abstract
 
-TODO
+This document describes the lattice signature scheme CRYSTALS-Dilithium (CRYDI).  
+The scheme is based on "Fiat-Shamir with Aborts"[Lyu09, Lyu12] utlizing a matrix
+of polynomials for key material, and a vector of polynomials for signatures.  
+The parameter set is strategically chosen such that the signing algorithm is large
+enough to maintain zero-knowledge properties but small enough to prevent forgery of
+signatures. An example implementation and test vectors are provided.
 
 {mainmatter}
 
@@ -186,7 +191,9 @@ keys and that support cryptographic sponge fucntions. It has the following param
 
 o The parameter "kty" MUST be "PQK".
 
-o The parameter "pset" MUST be "3.
+o The parameter "pset" MUST be one of the described parameter sets "2", "3", or "5".  
+Parameter set "3" or above SHOULD be used for any situation requiring at least
+128bits of security against both quantum and classical attacks
 
 o The parameter "x" MUST be present and contain the public key
 encoded using the base64url [RFC4648] encoding.
@@ -213,7 +220,6 @@ fields are included in the hash input in lexicographic order:
     "kty": "PQK",
     "pset": "3",
     "xs": "z3uZQVjflnRZDSZn1e8g4oKH4YUU6TnpvkU4WrrGdXw=",
-    "ds": "5DuZ8XoJQirc/5TE23tBcoGoHo+JTj1+9ULLXtCiySU=",
     "x": "z7...",
 }
 ```
@@ -235,22 +241,23 @@ fields are included in the hash input in lexicographic order:
 
 ## Signatures
 
-For the purpose of using the Dilithium Signature
-Algorithm (DICRY) for signing data using "JSON Web Signature (JWS)"
-[RFC7515], algorithm "DICRY" is defined here, to be applied as the
+For the purpose of using the CRYSTALS-Dilithium Signature
+Algorithm (CRYDI) for signing data using "JSON Web Signature (JWS)"
+[RFC7515], algorithm "CRYDI" is defined here, to be applied as the
 value of the "alg" parameter.
 
-The following key subtypes are defined here for use with DICRY:
+The following key subtypes are defined here for use with CRYDI:
 
-      "pset"             DICRY Variant
-      3                  DICRY3
-      2                  DICRY2
+      "pset"             CRYDI Paramter Set
+      5                  CRYDI5
+      3                  CRYDI3
+      2                  CRYDI2
 
 The key type used with these keys is "PQK" and the algorithm used for
-signing is "DICRY". These subtypes MUST NOT be used for key agreement.
+signing is "CRYDI". These subtypes MUST NOT be used for key agreement.
 
-The DICRY variant used is determined by the subtype of the key
-(DICRY3 for "pset 3" and DICRY2 for "pset 2").
+The CRYDI variant used is determined by the subtype of the key
+(CRYDI3 for "pset 3" and CRYDI2 for "pset 2").
 
 ### Signing
 
@@ -334,8 +341,8 @@ o Specification Document(s): Section 2 of RFC 8037
 The following has NOT YET been added to the "JSON Web Signature and
 Encryption Algorithms" registry:
 
-o Algorithm Name: "DICRY3"
-o Algorithm Description: DICRY3 signature algorithms
+o Algorithm Name: "CRYDI3"
+o Algorithm Description: CRYDI3 signature algorithms
 o Algorithm Usage Location(s): "alg"
 o JOSE Implementation Requirements: Optional
 o Change Controller: IESG
@@ -346,13 +353,19 @@ o Algorithm Analysis Documents(s): [RFC TBD]
 The following has been added to the "JSON Web Key Lattice"
 registry:
 
-o Lattice Name: "DICRY3"
+o Lattice Name: "CRYDI5"
+o Lattice Description: Dilithium 5 signature algorithm key pairs
+o JOSE Implementation Requirements: Optional
+o Change Controller: IESG
+o Specification Document(s): Section 3.1 of this document (RFC TBD)
+
+o Lattice Name: "CRYDI3"
 o Lattice Description: Dilithium 3 signature algorithm key pairs
 o JOSE Implementation Requirements: Optional
 o Change Controller: IESG
 o Specification Document(s): Section 3.1 of this document (RFC TBD)
 
-o Lattice Name: "DICRY2"
+o Lattice Name: "CRYDI2"
 o Lattice Description: Dilithium 2 signature algorithm key pairs
 o JOSE Implementation Requirements: Optional
 o Change Controller: IESG
@@ -368,6 +381,7 @@ o Specification Document(s): Section 3.1 of this document (RFC TBD)
 - JSON Web Key Thumbprint - [RFC7638][spec-thumbprint]
 - JWS Unencoded Payload Option - [RFC7797][spec-b64]
 - CFRG Elliptic Curve ECDH and Signatures - [RFC8037][spec-okp]
+- CRYSTALS-Dilithium - [Dilithium][spec-crystals-dilithium]
 
 [spec-b64]: https://tools.ietf.org/html/rfc7797
 [spec-cookbook]: https://tools.ietf.org/html/rfc7520
@@ -379,6 +393,7 @@ o Specification Document(s): Section 3.1 of this document (RFC TBD)
 [spec-okp]: https://tools.ietf.org/html/rfc8037
 [spec-secp256k1]: https://tools.ietf.org/html/rfc8812
 [spec-thumbprint]: https://tools.ietf.org/html/rfc7638
+[spec-crystals-dilithium]: https://www.pq-crystals.org/dilithium/data/dilithium-specification-round3-20210208.pdf
 
 ## Test Vectors
 
