@@ -1099,7 +1099,7 @@ tr:nth-child(2n+1) > td {
 <dd class="authors">
 <div class="author">
       <div class="author-name">M. Prorock</div>
-<div class="org">Mesur</div>
+<div class="org">mesur.io</div>
 </div>
 <div class="author">
       <div class="author-name">O. Steele</div>
@@ -1150,19 +1150,13 @@ signatures. An example implementation and test vectors are provided.<a href="#se
                 <p id="section-toc.1-1.3.2.1.1"><a href="#section-3.1" class="xref">3.1</a>.  <a href="#name-parameters" class="xref">Parameters</a><a href="#section-toc.1-1.3.2.1.1" class="pilcrow">¶</a></p>
 </li>
 <li class="toc ulEmpty" id="section-toc.1-1.3.2.2">
-                <p id="section-toc.1-1.3.2.2.1"><a href="#section-3.2" class="xref">3.2</a>.  <a href="#name-derivepublickey" class="xref">DerivePublicKey</a><a href="#section-toc.1-1.3.2.2.1" class="pilcrow">¶</a></p>
+                <p id="section-toc.1-1.3.2.2.1"><a href="#section-3.2" class="xref">3.2</a>.  <a href="#name-generate-key-pair" class="xref">Generate Key Pair</a><a href="#section-toc.1-1.3.2.2.1" class="pilcrow">¶</a></p>
 </li>
 <li class="toc ulEmpty" id="section-toc.1-1.3.2.3">
-                <p id="section-toc.1-1.3.2.3.1"><a href="#section-3.3" class="xref">3.3</a>.  <a href="#name-keyvalidate" class="xref">KeyValidate</a><a href="#section-toc.1-1.3.2.3.1" class="pilcrow">¶</a></p>
+                <p id="section-toc.1-1.3.2.3.1"><a href="#section-3.3" class="xref">3.3</a>.  <a href="#name-sign" class="xref">Sign</a><a href="#section-toc.1-1.3.2.3.1" class="pilcrow">¶</a></p>
 </li>
 <li class="toc ulEmpty" id="section-toc.1-1.3.2.4">
-                <p id="section-toc.1-1.3.2.4.1"><a href="#section-3.4" class="xref">3.4</a>.  <a href="#name-keygenerate" class="xref">KeyGenerate</a><a href="#section-toc.1-1.3.2.4.1" class="pilcrow">¶</a></p>
-</li>
-<li class="toc ulEmpty" id="section-toc.1-1.3.2.5">
-                <p id="section-toc.1-1.3.2.5.1"><a href="#section-3.5" class="xref">3.5</a>.  <a href="#name-sign" class="xref">Sign</a><a href="#section-toc.1-1.3.2.5.1" class="pilcrow">¶</a></p>
-</li>
-<li class="toc ulEmpty" id="section-toc.1-1.3.2.6">
-                <p id="section-toc.1-1.3.2.6.1"><a href="#section-3.6" class="xref">3.6</a>.  <a href="#name-verify" class="xref">Verify</a><a href="#section-toc.1-1.3.2.6.1" class="pilcrow">¶</a></p>
+                <p id="section-toc.1-1.3.2.4.1"><a href="#section-3.4" class="xref">3.4</a>.  <a href="#name-verify" class="xref">Verify</a><a href="#section-toc.1-1.3.2.4.1" class="pilcrow">¶</a></p>
 </li>
 </ul>
 </li>
@@ -1366,132 +1360,28 @@ classical and quantum attacks.  Under a parameter set at NIST level 3, a
 |5|8x7|187.4|<a href="#section-3.1-2" class="pilcrow">¶</a></p>
 </section>
 </div>
-<div id="derivepublickey">
+<div id="generate-key-pair">
 <section id="section-3.2">
-        <h3 id="name-derivepublickey">
-<a href="#section-3.2" class="section-number selfRef">3.2. </a><a href="#name-derivepublickey" class="section-name selfRef">DerivePublicKey</a>
+        <h3 id="name-generate-key-pair">
+<a href="#section-3.2" class="section-number selfRef">3.2. </a><a href="#name-generate-key-pair" class="section-name selfRef">Generate Key Pair</a>
         </h3>
-<p id="section-3.2-1">DerivePublicKey produces a public key from a private key.<a href="#section-3.2-1" class="pilcrow">¶</a></p>
-<div class="artwork art-text alignLeft" id="section-3.2-2">
-<pre>PK = DerivePublicKey(SK)
-</pre><a href="#section-3.2-2" class="pilcrow">¶</a>
-</div>
-<p id="section-3.2-3">Inputs:<a href="#section-3.2-3" class="pilcrow">¶</a></p>
-<ul>
-<li id="section-3.2-4.1">
-            <p id="section-3.2-4.1.1">SK, an (integer, set of integer, set of polynomials) (TODO FIXME).<a href="#section-3.2-4.1.1" class="pilcrow">¶</a></p>
-</li>
-</ul>
-<p id="section-3.2-5">Outputs:<a href="#section-3.2-5" class="pilcrow">¶</a></p>
-<ul>
-<li id="section-3.2-6.1">
-            <p id="section-3.2-6.1.1">PK, a public key<a href="#section-3.2-6.1.1" class="pilcrow">¶</a></p>
-</li>
-</ul>
-<p id="section-3.2-7">Procedure:<a href="#section-3.2-7" class="pilcrow">¶</a></p>
-<ol start="1" type="1" class="normal type-1" id="section-3.2-8">
-          <li id="section-3.2-8.1">
-            <p id="section-3.2-8.1.1">Remove d<a href="#section-3.2-8.1.1" class="pilcrow">¶</a></p>
-</li>
-<li id="section-3.2-8.2">
-            <p id="section-3.2-8.2.1">Remove ds<a href="#section-3.2-8.2.1" class="pilcrow">¶</a></p>
-</li>
-<li id="section-3.2-8.3">
-            <p id="section-3.2-8.3.1">calculate xs<a href="#section-3.2-8.3.1" class="pilcrow">¶</a></p>
-</li>
-<li id="section-3.2-8.4">
-            <p id="section-3.2-8.4.1">return x, xs, kty, pset<a href="#section-3.2-8.4.1" class="pilcrow">¶</a></p>
-</li>
-</ol>
-</section>
-</div>
-<div id="keyvalidate">
-<section id="section-3.3">
-        <h3 id="name-keyvalidate">
-<a href="#section-3.3" class="section-number selfRef">3.3. </a><a href="#name-keyvalidate" class="section-name selfRef">KeyValidate</a>
-        </h3>
-<p id="section-3.3-1">KeyValidate checks if the public key is valid.<a href="#section-3.3-1" class="pilcrow">¶</a></p>
-<p id="section-3.3-2">As an optimization, implementations MAY cache the result of KeyValidate in order to avoid unnecessarily repeating validation for known keys.<a href="#section-3.3-2" class="pilcrow">¶</a></p>
-<div class="artwork art-text alignLeft" id="section-3.3-3">
-<pre>result = KeyValidate(PK)
-</pre><a href="#section-3.3-3" class="pilcrow">¶</a>
-</div>
-<p id="section-3.3-4">Inputs:<a href="#section-3.3-4" class="pilcrow">¶</a></p>
-<ul>
-<li id="section-3.3-5.1">
-            <p id="section-3.3-5.1.1">PK, a public key in the format output by DerivePublicKey.<a href="#section-3.3-5.1.1" class="pilcrow">¶</a></p>
-</li>
-</ul>
-<p id="section-3.3-6">Outputs:<a href="#section-3.3-6" class="pilcrow">¶</a></p>
-<ul>
-<li id="section-3.3-7.1">
-            <p id="section-3.3-7.1.1">result, either VALID or INVALID<a href="#section-3.3-7.1.1" class="pilcrow">¶</a></p>
-</li>
-</ul>
-<p id="section-3.3-8">Procedure:<a href="#section-3.3-8" class="pilcrow">¶</a></p>
-<ol start="1" type="1" class="normal type-1" id="section-3.3-9">
-          <li id="section-3.3-9.1">
-            <p id="section-3.3-9.1.1">calculate xs1 from x<a href="#section-3.3-9.1.1" class="pilcrow">¶</a></p>
-</li>
-<li id="section-3.3-9.2">
-            <p id="section-3.3-9.2.1">result = true &amp;&amp; xs1 === xs<a href="#section-3.3-9.2.1" class="pilcrow">¶</a></p>
-</li>
-<li id="section-3.3-9.3">
-            <p id="section-3.3-9.3.1">result = result &amp;&amp; xs.length = 32<a href="#section-3.3-9.3.1" class="pilcrow">¶</a></p>
-</li>
-<li id="section-3.3-9.4">
-            <p id="section-3.3-9.4.1">return result<a href="#section-3.3-9.4.1" class="pilcrow">¶</a></p>
-</li>
-</ol>
-</section>
-</div>
-<div id="keygenerate">
-<section id="section-3.4">
-        <h3 id="name-keygenerate">
-<a href="#section-3.4" class="section-number selfRef">3.4. </a><a href="#name-keygenerate" class="section-name selfRef">KeyGenerate</a>
-        </h3>
-<p id="section-3.4-1">KeyGenerate produces a private key<a href="#section-3.4-1" class="pilcrow">¶</a></p>
-<div class="artwork art-text alignLeft" id="section-3.4-2">
-<pre>SK = KeyGenerate()
-</pre><a href="#section-3.4-2" class="pilcrow">¶</a>
-</div>
-<p id="section-3.4-3">Inputs:<a href="#section-3.4-3" class="pilcrow">¶</a></p>
-<ul>
-<li id="section-3.4-4.1">
-            <p id="section-3.4-4.1.1">RAND, a random number generator? TODO FIXME.<a href="#section-3.4-4.1.1" class="pilcrow">¶</a></p>
-</li>
-</ul>
-<p id="section-3.4-5">Outputs:<a href="#section-3.4-5" class="pilcrow">¶</a></p>
-<ul>
-<li id="section-3.4-6.1">
-            <p id="section-3.4-6.1.1">SK, a private key<a href="#section-3.4-6.1.1" class="pilcrow">¶</a></p>
-</li>
-</ul>
-<p id="section-3.4-7">Procedure:<a href="#section-3.4-7" class="pilcrow">¶</a></p>
-<ol start="1" type="1" class="normal type-1" id="section-3.4-8">
-          <li id="section-3.4-8.1">
-            <p id="section-3.4-8.1.1">???<a href="#section-3.4-8.1.1" class="pilcrow">¶</a></p>
-</li>
-<li id="section-3.4-8.2">
-            <p id="section-3.4-8.2.1">return SK<a href="#section-3.4-8.2.1" class="pilcrow">¶</a></p>
-</li>
-</ol>
+<p id="section-3.2-1">//TODO<a href="#section-3.2-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="sign">
-<section id="section-3.5">
+<section id="section-3.3">
         <h3 id="name-sign">
-<a href="#section-3.5" class="section-number selfRef">3.5. </a><a href="#name-sign" class="section-name selfRef">Sign</a>
+<a href="#section-3.3" class="section-number selfRef">3.3. </a><a href="#name-sign" class="section-name selfRef">Sign</a>
         </h3>
-<p id="section-3.5-1">//TODO<a href="#section-3.5-1" class="pilcrow">¶</a></p>
+<p id="section-3.3-1">//TODO<a href="#section-3.3-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="verify">
-<section id="section-3.6">
+<section id="section-3.4">
         <h3 id="name-verify">
-<a href="#section-3.6" class="section-number selfRef">3.6. </a><a href="#name-verify" class="section-name selfRef">Verify</a>
+<a href="#section-3.4" class="section-number selfRef">3.4. </a><a href="#name-verify" class="section-name selfRef">Verify</a>
         </h3>
-<p id="section-3.6-1">// TODO<a href="#section-3.6-1" class="pilcrow">¶</a></p>
+<p id="section-3.4-1">// TODO<a href="#section-3.4-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -1677,13 +1567,13 @@ o Specification Document(s): Section 2 of this document (RFC TBD)<a href="#secti
 <p id="section-7-7">o Parameter Name: "d"
 o Parameter Description: The private key
 o Parameter Information Class: Private
-o Used with "kty" Value(s): "OKP"
+o Used with "kty" Value(s): "PQK"
 o Change Controller: IESG
 o Specification Document(s): Section 2 of RFC 8037<a href="#section-7-7" class="pilcrow">¶</a></p>
 <p id="section-7-8">o Parameter Name: "x"
 o Parameter Description: The public key
 o Parameter Information Class: Public
-o Used with "kty" Value(s): "OKP"
+o Used with "kty" Value(s): "PQK"
 o Change Controller: IESG
 o Specification Document(s): Section 2 of RFC 8037<a href="#section-7-8" class="pilcrow">¶</a></p>
 <p id="section-7-9">The following has NOT YET been added to the "JSON Web Signature and
@@ -1763,15 +1653,15 @@ o Specification Document(s): Section 3.1 of this document (RFC TBD)<a href="#sec
 <a href="#section-9" class="section-number selfRef">9. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
       </h2>
 <dl class="references">
+<dt id="RFC8702">[RFC8702]</dt>
+<dd>
+<span class="refAuthor">Kampanakis, P.</span><span class="refAuthor"> and Q. Dang</span>, <span class="refTitle">"Use of the SHAKE One-Way Hash Functions in the Cryptographic Message Syntax (CMS)"</span>, <span class="seriesInfo">RFC 8702</span>, <span class="seriesInfo">DOI 10.17487/RFC8702</span>, <time datetime="2020-01">January 2020</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc8702">https://www.rfc-editor.org/info/rfc8702</a>&gt;</span>. </dd>
 <dt id="RFC2119">[RFC2119]</dt>
 <dd>
 <span class="refAuthor">Bradner, S.</span>, <span class="refTitle">"Key words for use in RFCs to Indicate Requirement Levels"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 2119</span>, <span class="seriesInfo">DOI 10.17487/RFC2119</span>, <time datetime="1997-03">March 1997</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc2119">https://www.rfc-editor.org/info/rfc2119</a>&gt;</span>. </dd>
 <dt id="RFC6234">[RFC6234]</dt>
 <dd>
 <span class="refAuthor">Eastlake 3rd, D.</span><span class="refAuthor"> and T. Hansen</span>, <span class="refTitle">"US Secure Hash Algorithms (SHA and SHA-based HMAC and HKDF)"</span>, <span class="seriesInfo">RFC 6234</span>, <span class="seriesInfo">DOI 10.17487/RFC6234</span>, <time datetime="2011-05">May 2011</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc6234">https://www.rfc-editor.org/info/rfc6234</a>&gt;</span>. </dd>
-<dt id="RFC8702">[RFC8702]</dt>
-<dd>
-<span class="refAuthor">Kampanakis, P.</span><span class="refAuthor"> and Q. Dang</span>, <span class="refTitle">"Use of the SHAKE One-Way Hash Functions in the Cryptographic Message Syntax (CMS)"</span>, <span class="seriesInfo">RFC 8702</span>, <span class="seriesInfo">DOI 10.17487/RFC8702</span>, <time datetime="2020-01">January 2020</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc8702">https://www.rfc-editor.org/info/rfc8702</a>&gt;</span>. </dd>
 </dl>
 </section>
 <div id="authors-addresses">
@@ -1781,7 +1671,7 @@ o Specification Document(s): Section 3.1 of this document (RFC TBD)<a href="#sec
       </h2>
 <address class="vcard">
         <div dir="auto" class="left"><span class="fn nameRole">Michael Prorock</span></div>
-<div dir="auto" class="left"><span class="org">Mesur</span></div>
+<div dir="auto" class="left"><span class="org">mesur.io</span></div>
 <div class="email">
 <span>Email:</span>
 <a href="mailto:mprorock@mesur.io" class="email">mprorock@mesur.io</a>
