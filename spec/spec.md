@@ -65,13 +65,26 @@ protection against future algebraic attacks on Ring-LWE that may be developed.
 CRYSTALS-Dilithium, brings several advantages over other approaches to 
 signature suites:
 
-- Post Quantum
-- Simple implementation while maintaing security
-- Signature and Public Key Size
-- Conservative parameter space
-- Parameter set adjustment for greater security
-- Performance and optimization 
+- Post Quantum in nature - use of lattices and other approaches that should
+remain hard problems even when under attack utilizing quantum approaches
+- Simple implementation while maintaing security - a danger in many possible
+approaches to cryptography is that it may be possible inadvertantly introduce
+errors in code that lead to weakness or decreases in security level 
+- Signature and Public Key Size - compared to other post quantum approaches
+a reasonable key size has been achieved that also preserves desired security
+properties
+- Conservative parameter space - parameterization is utilized for the purposes
+of defining the sizes of marices in use, and thereby the number of polynomials
+described by the key material.  
+- Parameter set adjustment for greater security - increasing this matrix size 
+increases the number of polynomials, and thereby the security level
+- Performance and optimization - the approach makes use of well known 
+transforms that can be highly optimized, especially with use of hardware
+optimizations without being so large that it cannot be deployed in embedded
+or IoT environments without some degree of optimization.
 
+The primary known disadvantage to CRYSTALS-Dilithium is the size of keys and
+signatures, especially as compared to classical approaches for digital signing.
 
 ## Notational Conventions
 
@@ -130,7 +143,8 @@ which should be sufficient to maintain 128bits of security for all known
 classical and quantum attacks.  Under a parameter set at NIST level 3, a 
 6x5 matrix is utilized that thereby consists of 30 polynomials.  
 
-Parameter sets
+### Parameter sets
+
 |NIST Level|Matrix Size|memory in bits|
 |2|4x4|97.8|
 |3|6x5|138.7|
