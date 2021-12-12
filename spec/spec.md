@@ -1,5 +1,5 @@
 %%%
-title = "Dilithium JSON Encoding"
+title = "CRYSTALS-Dilithium JSON Encoding"
 abbrev = "dilithium-jose"
 ipr= "none"
 area = "Internet"
@@ -45,7 +45,33 @@ signatures. An example implementation and test vectors are provided.
 
 # Introduction
 
-TODO
+CRYSTALS-Dilithium is a Post Quantum approach to digital signatures that is 
+an algorithmic apprach that seeks to ensure key pair and signing properties 
+that is a strong implementation meeting Existential Unforgeability under 
+Chosen Message Attack (EUF-CMA) properties, while ensuring that the security 
+levels reached meet security needs for resistance to both classical and quantum
+attacks.  The algoritm itself is based on hard problems over module lattices,
+specifically Ring Learning with Errors (Ring-LWE).  For all security levels
+the only operations required are variants of Keccak and number theoretic 
+transforms (NTT) for the ring Zq[X]/(X256+1).  This ensures that to increase 
+or decrease the security level invovles only the change of parameters rather
+than re-implementation of a related algorithm.
+
+While based on Ring-LWE, CRYSTALS-Dilithium has less algebraic structure than 
+direct Ring-LWE implementations and more closely resembles the unstructured 
+lattices used in Learning with Errors (LWE).  This brings a theorectical 
+protection against future algebraic attacks on Ring-LWE that may be developed. 
+
+CRYSTALS-Dilithium, brings several advantages over other approaches to 
+signature suites:
+
+- Post Quantum
+- Simple implementation while maintaing security
+- Signature and Public Key Size
+- Conservative parameter space
+- Parameter set adjustment for greater security
+- Performance and optimization 
+
 
 ## Notational Conventions
 
@@ -93,11 +119,22 @@ This section defines core operations used by the scheme.
 
 ## Parameters
 
-The core operations in this section depend on several parameters:
+Unlike certain other approaches such as Ed25519 that have a large set of
+parameters, CRYSTALS-Dilithium uses distinct numbers of paramters to
+increase or decrease the security level according to the required
+level for a particular scenario.  Under DILITHIUM-Crustals, the key
+parameter specificiation determines the size of the matrix and thereby
+the number of polynomials that describe he lattice.  For use according to 
+this specification we do not recommend a parameter set of less than 3,
+which should be sufficient to maintain 128bits of security for all known
+classical and quantum attacks.  Under a parameter set at NIST level 3, a 
+6x5 matrix is utilized that thereby consists of 30 polynomials.  
 
-<!-- IF we want to parameterize we can... recommend we remove this section, not provide only 1 value for any parameter. -->
-
-- H, a hash function that MUST be a secure cryptographic hash function, e.g. SHAKE256.
+Parameter sets
+|NIST Level|Matrix Size|memory in bits|
+|2|4x4|97.8|
+|3|6x5|138.7|
+|5|8x7|187.4|
 
 ## DerivePublicKey
 
