@@ -22,6 +22,7 @@ WEBASM_COMPILER ?= emcc
 WEBASM_EXPORTS = _dilithiumGenerate, _dilithiumSign, _dilithiumVerify, _dilithiumVersion, _malloc
 WEBASM_FLAGS ?= -O3 -flto -s WASM=1 \
   ${DILITHIUM_MODE} \
+  -s AGGRESSIVE_VARIABLE_ELIMINATION=1 \
   -s MODULARIZE -s EXPORT_NAME="dilithium" \
   -s SINGLE_FILE=1 \
   -s EXPORTED_FUNCTIONS="[$(WEBASM_EXPORTS)]"
