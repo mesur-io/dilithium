@@ -217,7 +217,7 @@ int verify(const char *sig, const char *m, const char *pk)
 **************************************************/
 int shake256Bytes(char *shaken, const char *bytes)
 {
-    shake256((uint8_t *)shaken, CRYPTO_SHAKEBYTES, (const uint8_t *)bytes, sizeof(bytes));
+    shake256((uint8_t *)shaken, CRYPTO_SHAKEBYTES, (const uint8_t *)bytes, strlen(bytes));
     return 0;
 }
 
