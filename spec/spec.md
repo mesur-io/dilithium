@@ -128,7 +128,7 @@ shake256
 
 # Core Operations
 
-This section defines core operations used by the scheme.
+This section defines core operations used by the signature scheme.
 
 ## Parameters
 
@@ -148,11 +148,11 @@ classical and quantum attacks.  Under a parameter set at NIST level 3, a
 Parameter sets are identified by the corresponding NIST level per the
 table below
 
-|NIST Level|Matrix Size|memory in bits|
-|---|---|---|
-|2|4x4|97.8|
-|3|6x5|138.7|
-|5|8x7|187.4|
+| NIST Level | Matrix Size | memory in bits |
+| ---------- | ----------- | -------------- |
+| 2          | 4x4         | 97.8           |
+| 3          | 6x5         | 138.7          |
+| 5          | 8x7         | 187.4          |
 
 ## Generate Key Pair
 

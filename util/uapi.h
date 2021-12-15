@@ -14,5 +14,7 @@ int version(void);
 int generate(struct Keypair *keypair);
 int sign(char *sm, const char *m, const char *sk);
 int verify(const char *sig, const char *m, const char *pk);
+int shake256Bytes(char *shaken, const char *bytes);
+int shake256B64Bytes(char *shaken, const char *b64);
 
 #endif

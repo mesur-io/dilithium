@@ -19,7 +19,8 @@ AES_SOURCES = $(SOURCES) ../ref/fips202.c ../ref/aes256ctr.c ../ref/symmetric-ae
 AES_HEADERS = $(HEADERS) ../ref/fips202.h ../ref/aes256ctr.h
 
 WEBASM_COMPILER ?= emcc
-WEBASM_EXPORTS = _dilithiumGenerate, _dilithiumSign, _dilithiumVerify, _dilithiumVersion, _malloc
+WEBASM_EXPORTS = _dilithiumGenerate, _dilithiumSign, _dilithiumVerify, _dilithiumVersion, \
+  _shake256B64Bytes, _shake256Bytes, _malloc
 WEBASM_FLAGS ?= -O3 -flto -s WASM=1 \
   ${DILITHIUM_MODE} \
   -s AGGRESSIVE_VARIABLE_ELIMINATION=1 \
