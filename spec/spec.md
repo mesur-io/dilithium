@@ -45,43 +45,43 @@ signatures. An example implementation and test vectors are provided.
 
 # Introduction
 
-CRYSTALS-Dilithium is a Post Quantum approach to digital signatures that is 
-an algorithmic apprach that seeks to ensure key pair and signing properties 
-that is a strong implementation meeting Existential Unforgeability under 
-Chosen Message Attack (EUF-CMA) properties, while ensuring that the security 
+CRYSTALS-Dilithium is a Post Quantum approach to digital signatures that is
+an algorithmic apprach that seeks to ensure key pair and signing properties
+that is a strong implementation meeting Existential Unforgeability under
+Chosen Message Attack (EUF-CMA) properties, while ensuring that the security
 levels reached meet security needs for resistance to both classical and quantum
-attacks.  The algoritm itself is based on hard problems over module lattices,
-specifically Ring Learning with Errors (Ring-LWE).  For all security levels
-the only operations required are variants of Keccak and number theoretic 
-transforms (NTT) for the ring Zq[X]/(X256+1).  This ensures that to increase 
+attacks. The algoritm itself is based on hard problems over module lattices,
+specifically Ring Learning with Errors (Ring-LWE). For all security levels
+the only operations required are variants of Keccak and number theoretic
+transforms (NTT) for the ring Zq[X]/(X256+1). This ensures that to increase
 or decrease the security level invovles only the change of parameters rather
 than re-implementation of a related algorithm.
 
-While based on Ring-LWE, CRYSTALS-Dilithium has less algebraic structure than 
-direct Ring-LWE implementations and more closely resembles the unstructured 
-lattices used in Learning with Errors (LWE).  This brings a theorectical 
-protection against future algebraic attacks on Ring-LWE that may be developed. 
+While based on Ring-LWE, CRYSTALS-Dilithium has less algebraic structure than
+direct Ring-LWE implementations and more closely resembles the unstructured
+lattices used in Learning with Errors (LWE). This brings a theorectical
+protection against future algebraic attacks on Ring-LWE that may be developed.
 
-CRYSTALS-Dilithium, brings several advantages over other approaches to 
+CRYSTALS-Dilithium, brings several advantages over other approaches to
 signature suites:
 
 - Post Quantum in nature - use of lattices and other approaches that should
-remain hard problems even when under attack utilizing quantum approaches
+  remain hard problems even when under attack utilizing quantum approaches
 - Simple implementation while maintaing security - a danger in many possible
-approaches to cryptography is that it may be possible inadvertantly introduce
-errors in code that lead to weakness or decreases in security level 
+  approaches to cryptography is that it may be possible inadvertantly introduce
+  errors in code that lead to weakness or decreases in security level
 - Signature and Public Key Size - compared to other post quantum approaches
-a reasonable key size has been achieved that also preserves desired security
-properties
+  a reasonable key size has been achieved that also preserves desired security
+  properties
 - Conservative parameter space - parameterization is utilized for the purposes
-of defining the sizes of marices in use, and thereby the number of polynomials
-described by the key material.  
-- Parameter set adjustment for greater security - increasing this matrix size 
-increases the number of polynomials, and thereby the security level
-- Performance and optimization - the approach makes use of well known 
-transforms that can be highly optimized, especially with use of hardware
-optimizations without being so large that it cannot be deployed in embedded
-or IoT environments without some degree of optimization.
+  of defining the sizes of marices in use, and thereby the number of polynomials
+  described by the key material.
+- Parameter set adjustment for greater security - increasing this matrix size
+  increases the number of polynomials, and thereby the security level
+- Performance and optimization - the approach makes use of well known
+  transforms that can be highly optimized, especially with use of hardware
+  optimizations without being so large that it cannot be deployed in embedded
+  or IoT environments without some degree of optimization.
 
 The primary known disadvantage to CRYSTALS-Dilithium is the size of keys and
 signatures, especially as compared to classical approaches for digital signing.
@@ -135,13 +135,13 @@ This section defines core operations used by the signature scheme.
 Unlike certain other approaches such as Ed25519 that have a large set of
 parameters, CRYSTALS-Dilithium uses distinct numbers of paramters to
 increase or decrease the security level according to the required
-level for a particular scenario.  Under DILITHIUM-Crustals, the key
+level for a particular scenario. Under DILITHIUM-Crustals, the key
 parameter specificiation determines the size of the matrix and thereby
-the number of polynomials that describe he lattice.  For use according to 
+the number of polynomials that describe he lattice. For use according to
 this specification we do not recommend a parameter set of less than 3,
 which should be sufficient to maintain 128bits of security for all known
-classical and quantum attacks.  Under a parameter set at NIST level 3, a 
-6x5 matrix is utilized that thereby consists of 30 polynomials.  
+classical and quantum attacks. Under a parameter set at NIST level 3, a
+6x5 matrix is utilized that thereby consists of 30 polynomials.
 
 ### Parameter sets
 
@@ -170,34 +170,34 @@ table below
 
 A new key type (kty) value "PQK" (Post Quantum Key Pair) is defined for
 public key algorithms that use base 64 encoded strings of the underlying binary materia
-as private and public keys and that support cryptographic sponge fucntions. 
+as private and public keys and that support cryptographic sponge functions.
 It has the following parameters:
 
-o The parameter "kty" MUST be "PQK".
+- The parameter "kty" MUST be "PQK".
 
-o The patameter "alg" MUST be specified, and at this time MAY only be "CRYDI" until
-other algorithms are specified
+- The patameter "alg" MUST be specified, and at this time MAY only be "CRYDI" until
+  other algorithms are specified
 
-o The parameter "pset" MUST be specfied to indicate the not only paramter set
-in use for the algorithm, but SHOULD also reflect the targeted NIST level for the 
-algorithm in combination with the specified paramter set. 
-For "alg" "CRYDI" one of the described parameter sets "2", "3", or "5" MUST be 
-specified. Parameter set "3" or above SHOULD be used with "CRYDI" for any situation 
-requiring at least 128bits of security against both quantum and classical attacks
+- The parameter "pset" MUST be specfied to indicate the not only paramter set
+  in use for the algorithm, but SHOULD also reflect the targeted NIST level for the
+  algorithm in combination with the specified paramter set.
+  For "alg" "CRYDI" one of the described parameter sets "2", "3", or "5" MUST be
+  specified. Parameter set "3" or above SHOULD be used with "CRYDI" for any situation
+  requiring at least 128bits of security against both quantum and classical attacks
 
-o The parameter "x" MUST be present and contain the public key
-encoded using the base64url [RFC4648] encoding.
+- The parameter "x" MUST be present and contain the public key
+  encoded using the base64url [RFC4648] encoding.
 
-o The parameter "xs" MAY be present and contain the shake256 of the public key
-encoded using the base64url [RFC4648] encoding.
+- The parameter "xs" MAY be present and contain the shake256 of the public key
+  encoded using the base64url [RFC4648] encoding.
 
-o The parameter "d" MUST be present for private keys and contain the
-private key encoded using the base64url encoding. This parameter
-MUST NOT be present for public keys.
+- The parameter "d" MUST be present for private keys and contain the
+  private key encoded using the base64url encoding. This parameter
+  MUST NOT be present for public keys.
 
-o The parameter "ds" MAY be present for private keys and contain the
-shake256 of the private key encoded using the base64url encoding. This parameter
-MUST NOT be present for public keys.
+- The parameter "ds" MAY be present for private keys and contain the
+  shake256 of the private key encoded using the base64url encoding. This parameter
+  MUST NOT be present for public keys.
 
 When calculating JWK Thumbprints [RFC7638], the four public key
 fields are included in the hash input in lexicographic order:
@@ -276,21 +276,21 @@ For the sign, verify and proof schemes, the use of KeyValidate is REQUIRED.
 
 ## Side channel attacks
 
-Implementations of the signing algorithm SHOULD protect the secret key from side-channel attacks. 
-Multiple best practices exist to protect against side-channel attacks.  Any implementation
+Implementations of the signing algorithm SHOULD protect the secret key from side-channel attacks.
+Multiple best practices exist to protect against side-channel attacks. Any implementation
 of the the CRYSTALS-Dilithium signing algorithm SHOULD utilize the following best practices
 at a minimum:
 
 - Constant timing - the implementation should ensure that constant time is utilized in operations
-- Sequence and memory access persistance - the implemention SHOULD execute the exact same 
-sequence of instructions (at a machine level) with the exact same memory access independent
-of which polynomial is being operated on.
+- Sequence and memory access persistance - the implemention SHOULD execute the exact same
+  sequence of instructions (at a machine level) with the exact same memory access independent
+  of which polynomial is being operated on.
 - Uniform sampling - uniform sampling is the default in CRYSTALS-Dilithium to prevent information
-leakage, however care should be given in implementations to preserve the property of uniform
-sampling in implementation.
-- Secrecy of S1 - utmost care must be given to protection of S1 and to prevent information or 
-power leakage.  As is the case with most proposed lattice based approaches to date, fogery and
-other attacks may succeed through [leakage of S1](https://eprint.iacr.org/2018/821.pdf) through side channel mechanisms.
+  leakage, however care should be given in implementations to preserve the property of uniform
+  sampling in implementation.
+- Secrecy of S1 - utmost care must be given to protection of S1 and to prevent information or
+  power leakage. As is the case with most proposed lattice based approaches to date, fogery and
+  other attacks may succeed through [leakage of S1](https://eprint.iacr.org/2018/821.pdf) through side channel mechanisms.
 
 ## Randomness considerations
 
@@ -300,82 +300,81 @@ It is recommended that the all nonces are from a trusted source of randomness.
 
 The following has NOT YET been added to the "JSON Web Key Types" registry:
 
-o "kty" Parameter Value: "PQK"
-o Key Type Description: Base 64 encoded string key pairs
-o JOSE Implementation Requirements: Optional
-o Change Controller: IESG
-o Specification Document(s): Section 2 of this document (RFC TBD)
+- "kty" Parameter Value: "PQK"
+- Key Type Description: Base 64 encoded string key pairs
+- JOSE Implementation Requirements: Optional
+- Change Controller: IESG
+- Specification Document(s): Section 2 of this document (RFC TBD)
 
 The following has NOT YET been added to the "JSON Web Key Parameters"
 registry:
 
-o Parameter Name: "pset"
-o Parameter Description: The parameter set of the crypto system
-o Parameter Information Class: Public
-o Used with "kty" Value(s): "PQK"
-o Change Controller: IESG
-o Specification Document(s): Section 2 of this document (RFC TBD)
+- Parameter Name: "pset"
+- Parameter Description: The parameter set of the crypto system
+- Parameter Information Class: Public
+- Used with "kty" Value(s): "PQK"
+- Change Controller: IESG
+- Specification Document(s): Section 2 of this document (RFC TBD)
 
-o Parameter Name: "xs"
-o Parameter Description: The shake256 of the public key
-o Parameter Information Class: Public
-o Used with "kty" Value(s): "PQK"
-o Change Controller: IESG
-o Specification Document(s): Section 2 of this document (RFC TBD)
+- Parameter Name: "xs"
+- Parameter Description: The shake256 of the public key
+- Parameter Information Class: Public
+- Used with "kty" Value(s): "PQK"
+- Change Controller: IESG
+- Specification Document(s): Section 2 of this document (RFC TBD)
 
-o Parameter Name: "ds"
-o Parameter Description: The shake256 of the private key
-o Parameter Information Class: Private
-o Used with "kty" Value(s): "PQK"
-o Change Controller: IESG
-o Specification Document(s): Section 2 of this document (RFC TBD)
+- Parameter Name: "ds"
+- Parameter Description: The shake256 of the private key
+- Parameter Information Class: Private
+- Used with "kty" Value(s): "PQK"
+- Change Controller: IESG
+- Specification Document(s): Section 2 of this document (RFC TBD)
 
-o Parameter Name: "d"
-o Parameter Description: The private key
-o Parameter Information Class: Private
-o Used with "kty" Value(s): "PQK"
-o Change Controller: IESG
-o Specification Document(s): Section 2 of RFC 8037
+- Parameter Name: "d"
+- Parameter Description: The private key
+- Parameter Information Class: Private
+- Used with "kty" Value(s): "PQK"
+- Change Controller: IESG
+- Specification Document(s): Section 2 of RFC 8037
 
-o Parameter Name: "x"
-o Parameter Description: The public key
-o Parameter Information Class: Public
-o Used with "kty" Value(s): "PQK"
-o Change Controller: IESG
-o Specification Document(s): Section 2 of RFC 8037
+- Parameter Name: "x"
+- Parameter Description: The public key
+- Parameter Information Class: Public
+- Used with "kty" Value(s): "PQK"
+- Change Controller: IESG
+- Specification Document(s): Section 2 of RFC 8037
 
 The following has NOT YET been added to the "JSON Web Signature and
 Encryption Algorithms" registry:
 
-o Algorithm Name: "CRYDI3"
-o Algorithm Description: CRYDI3 signature algorithms
-o Algorithm Usage Location(s): "alg"
-o JOSE Implementation Requirements: Optional
-o Change Controller: IESG
-
-o Specification Document(s): Section 3.1 of this document (RFC TBD)
-o Algorithm Analysis Documents(s): [RFC TBD]
+- Algorithm Name: "CRYDI3"
+- Algorithm Description: CRYDI3 signature algorithms
+- Algorithm Usage Location(s): "alg"
+- JOSE Implementation Requirements: Optional
+- Change Controller: IESG
+- Specification Document(s): Section 3.1 of this document (RFC TBD)
+- Algorithm Analysis Documents(s): [RFC TBD]
 
 The following has been added to the "JSON Web Key Lattice"
 registry:
 
-o Lattice Name: "CRYDI5"
-o Lattice Description: Dilithium 5 signature algorithm key pairs
-o JOSE Implementation Requirements: Optional
-o Change Controller: IESG
-o Specification Document(s): Section 3.1 of this document (RFC TBD)
+- Lattice Name: "CRYDI5"
+- Lattice Description: Dilithium 5 signature algorithm key pairs
+- JOSE Implementation Requirements: Optional
+- Change Controller: IESG
+- Specification Document(s): Section 3.1 of this document (RFC TBD)
 
-o Lattice Name: "CRYDI3"
-o Lattice Description: Dilithium 3 signature algorithm key pairs
-o JOSE Implementation Requirements: Optional
-o Change Controller: IESG
-o Specification Document(s): Section 3.1 of this document (RFC TBD)
+- Lattice Name: "CRYDI3"
+- Lattice Description: Dilithium 3 signature algorithm key pairs
+- JOSE Implementation Requirements: Optional
+- Change Controller: IESG
+- Specification Document(s): Section 3.1 of this document (RFC TBD)
 
-o Lattice Name: "CRYDI2"
-o Lattice Description: Dilithium 2 signature algorithm key pairs
-o JOSE Implementation Requirements: Optional
-o Change Controller: IESG
-o Specification Document(s): Section 3.1 of this document (RFC TBD)
+- Lattice Name: "CRYDI2"
+- Lattice Description: Dilithium 2 signature algorithm key pairs
+- JOSE Implementation Requirements: Optional
+- Change Controller: IESG
+- Specification Document(s): Section 3.1 of this document (RFC TBD)
 
 # Appendix
 
