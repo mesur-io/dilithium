@@ -12,6 +12,7 @@
     "build": "echo 'build module from wasm...'",
     "postbuild": "cp ./util/dilithium.*  ./docs",
     "spec:build": "./spec/build-html.sh",
+    "spec:serve": "npx serve ./docs",
     "spec:shove": "git add ./spec; git commit -m 'Spec editorial'; git push origin master",
     "test:sanity": "node ./util/sanity-test.js",
     "test:vectors:generate": "node ./util/api.generate.vectors.js",
