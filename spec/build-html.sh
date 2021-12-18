@@ -1,7 +1,7 @@
 cd ./spec
 
 # Convert markdown to XML and HTML versions
-docker run -v `pwd`:/data danielfett/markdown2rfc spec.md || exit 1
+docker run -v `pwd`:/data or13/markdown2rfc spec.md || exit 1
 
 # Delete XML version
 rm dilithium-jose-00.xml
