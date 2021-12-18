@@ -34,43 +34,45 @@ static bool VDEBUG;
 int main(int argc, char *argv[])
 {
     int opt;
-    
+
     VERBOSE = false;
     DEBUG = false;
 
-    if (argc == 1) {
+    if (argc == 1)
+    {
         return generateKeys();
     }
 
     while ((opt = getopt(argc, argv, OPTSTR)) != EOF)
         switch (opt)
         {
-            case 'h':
-                usage();
-                exit(EXIT_FAILURE);
-            case 'V':
-                VERBOSE = true;
-                VDEBUG = DEBUG && VERBOSE;
-                break;
-            case 'd':
-                DEBUG = true;
-                VDEBUG = DEBUG && VERBOSE;
-                break;
-            case 'e':
-                return demo();
-            case '?':
-                fprintf(stderr, "invalid option: -%c\n", optopt);
-                exit(EXIT_FAILURE);
-            case 'g':
-            default:
-                return generateKeys();
-                break;
+        case 'h':
+            usage();
+            exit(EXIT_FAILURE);
+        case 'V':
+            VERBOSE = true;
+            VDEBUG = DEBUG && VERBOSE;
+            break;
+        case 'd':
+            DEBUG = true;
+            VDEBUG = DEBUG && VERBOSE;
+            break;
+        case 'e':
+            return demo();
+        case '?':
+            fprintf(stderr, "invalid option: -%c\n", optopt);
+            exit(EXIT_FAILURE);
+        case 'g':
+        default:
+            return generateKeys();
+            break;
         }
     return EXIT_SUCCESS;
 }
 #pragma GCC diagnostic pop
 
-int generateKeys(void) {
+int generateKeys(void)
+{
     struct Keypair keys;
     char keysString[CRYPTO_SECRETKEYBYTES_B64 + CRYPTO_PUBLICKEYBYTES_B64 + (CRYPTO_BYTES_B64 * 2) + 64];
     int generate_return = 0;
@@ -85,11 +87,13 @@ int demo(void)
     printf("Running quick key generation and signing demo...\n");
     if (DEBUG)
         printf("Entering cli:main\n");
-    printf("CRYPTO_BYTES: %d\n\n", CRYPTO_BYTES);
-    printf("CRYPTO_BYTES_B64: %d\n\n", CRYPTO_BYTES_B64);
-    printf("CRYPTO_PUBLICKEYBYTES_B64: %d\n\n", CRYPTO_PUBLICKEYBYTES_B64);
+    printf("CRYPTO_BYTES: %d\n", CRYPTO_BYTES);
+    printf("CRYPTO_BYTES_B64: %d\n", CRYPTO_BYTES_B64);
+    printf("CRYPTO_PUBLICKEYBYTES: %d\n", CRYPTO_PUBLICKEYBYTES);
+    printf("CRYPTO_PUBLICKEYBYTES_B64: %d\n", CRYPTO_PUBLICKEYBYTES_B64);
+    printf("CRYPTO_SECRETKEYBYTES: %d\n", CRYPTO_SECRETKEYBYTES);
     printf("CRYPTO_SECRETKEYBYTES_B64: %d\n\n", CRYPTO_SECRETKEYBYTES_B64);
-    
+
     struct Keypair keys;
     char keysString[CRYPTO_SECRETKEYBYTES_B64 + CRYPTO_PUBLICKEYBYTES_B64 + (CRYPTO_BYTES_B64 * 2) + 64];
     char signed_message[CRYPTO_BYTES_B64];
@@ -126,8 +130,9 @@ int demo(void)
     return verify_return;
 }
 
-int usage(void) {
-   fprintf(stderr, USAGE_FMT, DEFAULT_PROGNAME);
-   printf("\n");
-   return EXIT_FAILURE;
+int usage(void)
+{
+    fprintf(stderr, USAGE_FMT, DEFAULT_PROGNAME);
+    printf("\n");
+    return EXIT_FAILURE;
 }

@@ -231,18 +231,26 @@ It has the following parameters:
   requiring at least 128bits of security against both quantum and classical attacks
 
 - The parameter "x" MUST be present and contain the public key
-  encoded using the base64url [@!RFC4648] encoding.
+  encoded using the base64url [@!RFC4648] encoding.  
 
 - The parameter "xs" MAY be present and contain the shake256 of the public key
   encoded using the base64url [@!RFC4648] encoding.
 
 - The parameter "d" MUST be present for private keys and contain the
   private key encoded using the base64url encoding. This parameter
-  MUST NOT be present for public keys.
+  MUST NOT be present for public keys.  
 
 - The parameter "ds" MAY be present for private keys and contain the
   shake256 of the private key encoded using the base64url encoding. This parameter
   MUST NOT be present for public keys.
+
+Sizes of various key and signature material is as follows (for "pset" value "2")
+
+| Variable    | Paramter Name | Paramter Set | Size | base64url encoded size |
+| ----------- | ------------- | ------------ | ---- | ---------------------- |
+| Signature   | sig           | 2            | 3293 | 4393                   |
+| Public Key  | x             | 2            | 1952 | 2605                   |
+| Private Key | d             | 2            | 4000 | 5337                   |
 
 When calculating JWK Thumbprints [@!RFC7638], the four public key
 fields are included in the hash input in lexicographic order:
@@ -336,10 +344,11 @@ value of the "alg" parameter.
 
 The following key subtypes are defined here for use with CRYDI:
 
-      "pset"             CRYDI Paramter Set
-      5                  CRYDI5
-      3                  CRYDI3
-      2                  CRYDI2
+| "pset" | CRYDI Paramter Set |
+| ------ | ------------------ |
+| 5      | CRYDI5             |
+| 3      | CRYDI3             |
+| 2      | CRYDI2             |
 
 The key type used with these keys is "PQK" and the algorithm used for
 signing is "CRYDI". These subtypes MUST NOT be used for key agreement.
