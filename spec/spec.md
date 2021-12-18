@@ -128,7 +128,7 @@ shake256
 
 # Core Operations
 
-This section defines core operations used by the signature scheme.
+This section defines core operations used by the signature scheme, as proposed in [@CRYSTALS-Dilithium].
 
 ## Parameters
 
@@ -156,7 +156,14 @@ table below
 
 ## Generate Key Pair
 
-//TODO
+<!-- In order for svg figures to show, they must be bundled into the build -->
+<!-- https://viereck.ch/latex-to-svg/ -->
+<!-- 01  \hspace{0.25cm} A \leftarrow R_{q}^{k \times l} -->
+
+!---
+![svg](key-gen.svg "key generation")
+!---
+Figure: Key Generation
 
 ## Sign
 
@@ -399,6 +406,34 @@ registry:
 [spec-secp256k1]: https://tools.ietf.org/html/rfc8812
 [spec-thumbprint]: https://tools.ietf.org/html/rfc7638
 [spec-crystals-dilithium]: https://www.pq-crystals.org/dilithium/data/dilithium-specification-round3-20210208.pdf
+
+<reference anchor='CRYSTALS-Dilithium' target='https://doi.org/10.13154/tches.v2018.i1.238-268'>
+    <front>
+        <title>CRYSTALS-Dilithium: A Lattice-Based Digital Signature Scheme</title>
+        <author initials='L.' surname='Ducas' fullname='Léo Ducas'>
+            <organization>CWI</organization>
+        </author>
+        <author initials='E.' surname='Kiltz' fullname='Eike Kiltz'>
+            <organization>Ruhr Universität Bochum</organization>
+        </author>
+        <author initials='T.' surname='Lepoint' fullname='Tancrède Lepoint'>
+            <organization>SRI International</organization>
+        </author>
+        <author initials='V.' surname='Lyubashevsky' fullname='Vadim Lyubashevsky'>
+            <organization>IBM Research – Zurich</organization>
+        </author>
+        <author initials='P.' surname='Schwabe' fullname='Peter Schwabe'>
+            <organization>Radboud University</organization>
+        </author>
+        <author initials='G.' surname='Seiler' fullname='Gregor Seiler'>
+            <organization>IBM Research – Zurich</organization>
+        </author>
+        <author initials='D.' surname='Stehlé' fullname='Damien Stehlé'>
+            <organization>ENS de Lyon</organization>
+        </author>
+        <date year='2018'/>
+    </front>
+</reference>
 
 ## Test Vectors
 
