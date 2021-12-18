@@ -158,20 +158,64 @@ table below
 
 <!-- In order for svg figures to show, they must be bundled into the build -->
 <!-- https://viereck.ch/latex-to-svg/ -->
-<!-- 01  \hspace{0.25cm} A \leftarrow R_{q}^{k \times l} -->
+<!--
+
+
+\begin{align*}
+&\underline{\text{Gen}} \\
+&01  \hspace{0.25cm} \textbf{A} \leftarrow R_{q}^{k \times \ell}\\
+&02  \hspace{0.25cm} (s_{1}, s_{2}) \leftarrow S_{\eta}^{\ell} \times S_{\eta}^{k}\\
+&03  \hspace{0.25cm} \textbf{t} := \textbf{A}s_{1} +  s_{2}\\
+&04  \hspace{0.25cm} \textbf{ return } (pk = (\textbf{A},\textbf{t}),  sk=(\textbf{A},\textbf{t},s_{1},  s_{2}))\\
+\end{align*}
+
+ -->
 
 !---
 ![svg](key-gen.svg "key generation")
 !---
-Figure: Key Generation
 
 ## Sign
 
-//TODO
+<!--
+
+\begin{align*}
+&\underline{\text{Sign}(sk, M)} \\
+&05  \hspace{0.25cm} \textbf{z} := \perp\\
+&06  \hspace{0.25cm} \textbf{while z} = \perp \text{do}\\
+&07  \hspace{0.25cm}  \hspace{0.25cm} \textbf{y} \leftarrow S_{\gamma_{1} -1}^{\ell}\\
+&08  \hspace{0.25cm}  \hspace{0.25cm} \textbf{w}_{1} := \text{HighBits}(\textbf{Ay}, 2\gamma_{2})\\
+&09  \hspace{0.25cm}  \hspace{0.25cm} c \in B_{60} := \text{H}(M || \textbf{w}_{1})\\
+&10  \hspace{0.25cm}  \hspace{0.25cm} \textbf{z}  := \textbf{y} + cs_{1}\\
+&11  \hspace{0.25cm}  \hspace{0.25cm} \textbf{if} \hspace{0.15cm} ||\textbf{z}||_{\infty} \geq \gamma_{1} - \beta \hspace{0.15cm} \text{or} ||\text{LowBits}(\textbf{Ay} - cs_{2}, 2\gamma_{2})||_{\infty} \geq  \gamma_{2} - \beta, \text{then} \hspace{0.15cm}  \textbf{z} := \perp  \\
+&12  \hspace{0.25cm} \textbf{return } \sigma = (\textbf{z}, c)\\
+
+\end{align*}
+
+
+ -->
+
+!---
+![svg](sign.svg "sign")
+!---
 
 ## Verify
 
-// TODO
+<!--
+
+
+\begin{align*}
+&\underline{\text{Verify}(pk, M, \sigma = (\textbf{z}, c))} \\
+&13  \hspace{0.25cm} \textbf{w}_{1}^{\prime} := \text{HighBits}(\textbf{Az} - c\textbf{t}, 2\gamma_{2})\\
+&14 \hspace{0.25cm}  \textbf{if return } [\![ ||\textbf{z}||_{\infty} < \gamma_{1} - \beta ]\!] \hspace{0.1cm}  \textbf{and} \hspace{0.1cm} [\![ c= \text{H} (M || \textbf{w}_{1}^{\prime})]\!]
+
+\end{align*}
+
+ -->
+
+!---
+![svg](verify.svg "verify")
+!---
 
 # Key Type "PQK"
 
